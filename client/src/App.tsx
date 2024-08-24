@@ -22,7 +22,7 @@ export class UserAuth {
 function App() {
   const [user, setUser] = useState<UserAuth | undefined | null>(undefined);
   const [guilds, setGuilds] = useState<Array<Guild> | null>(null);
-  const [guild, setGuild] = useState<number>(-1);
+  const [guild, setGuild] = useState<number>(0);
   const [users, setUsers] = useState<Array<UserDb>>([]);
 
   useEffect(() => {
@@ -30,7 +30,6 @@ function App() {
       // console.log(res.data)
       var auth = new UserAuth(res.data.username, res.data.id, res.data.avatar);
       setUser(auth);
-      console.log(user);
     }).catch(() => setUser(null))
   }, []);
 
@@ -45,9 +44,10 @@ function App() {
   useEffect(() => {
     axios.get('https://localhost:3000/users/' + guilds?.at(guild)?.guildId).then((res: AxiosResponse) => {
       setUsers(res.data as unknown as Array<UserDb>)
-      // setGuild(guilds?.at(0));
+      console.log(res.data);
+      // setGuild(0);
     });
-  }, [guilds])
+  }, [guilds, guild])
 
 
   return (

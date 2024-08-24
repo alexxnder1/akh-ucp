@@ -1,6 +1,7 @@
 // import { Guild, UserDb } from "../../App";
 import PeopleIcon from '@mui/icons-material/People';
 import { Guild, UserDb } from './GuildBar';
+import { useEffect } from 'react';
 class Props {
     public guild: Guild | undefined;
     public users: Array<UserDb> | undefined;
@@ -19,6 +20,10 @@ const ChartStyle: React.CSSProperties = {
 }
 
 const GuildInfo = (props: Props) => {
+
+    useEffect(() => {
+        console.log(props.users)
+    }, [props.users]);
     return (
         <div className="GuildInfo" style={{
             color: 'white',
@@ -47,6 +52,7 @@ const GuildInfo = (props: Props) => {
                         <h1>Guild Members</h1>
                         <div id="users" style={{...ChartStyle, backgroundColor: 'orange'}}>
                             <PeopleIcon style={{ width:"30px", height: "30px", marginRight: "10px"}}/>
+                            
                             <h1>{props.users?.length === 0 ? 'Loading...' : props.users?.filter(u => u.guildId === props.guild?.guildId).length}</h1>
                         </div>
                     </div>

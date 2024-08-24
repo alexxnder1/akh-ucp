@@ -1,7 +1,10 @@
 import { useState } from "react";
 
+export const INVITE_URL: string = 'https://discord.com/oauth2/authorize?client_id=937011056260313099&scope=bot&permissions=1099511627775';
+
 const Home = () => {
-    const [loginHover, setLoginHover] = useState<boolean>(false); 
+  const [loginHover, setLoginHover] = useState<boolean>(false); 
+  const [inviteHover, setInviteHover] = useState<boolean>(false); 
 
     return (
         <div style={{
@@ -17,20 +20,36 @@ const Home = () => {
             <h1 style={{
               color: 'white',
             }}>You must log in.</h1>
-  
-        <button onMouseEnter={() => setLoginHover(true)} onMouseLeave={() => setLoginHover(false)} style={{ 
-              border: 'none',
-              fontSize: "20px",
-              padding: "10px",
-              paddingLeft: '10px',
-              paddingRight: '10px',
-              borderRadius: '10px',
-              backgroundColor: loginHover ? 'green' : 'white',
-              color: loginHover ? 'white' : 'green',
-              fontFamily: ''
-            }}onClick={(e) => {
-              window.location.href = 'https://localhost:3000/auth/discord';
-            }}>Login</button>
+
+        <div>
+          <button onMouseEnter={() => setLoginHover(true)} onMouseLeave={() => setLoginHover(false)} style={{ 
+                border: 'none',
+                fontSize: "20px",
+                padding: "10px",
+                paddingLeft: '10px',
+                paddingRight: '10px',
+                marginRight: "10px",
+                borderRadius: '10px',
+                backgroundColor: loginHover ? 'green' : 'white',
+                color: loginHover ? 'white' : 'green',
+                fontFamily: ''
+              }}onClick={(e) => {
+                window.location.href = INVITE_URL;
+              }}>Invite to Server</button>
+          <button onMouseEnter={() => setInviteHover(true)} onMouseLeave={() => setInviteHover(false)} style={{ 
+                border: 'none',
+                fontSize: "20px",
+                padding: "10px",
+                paddingLeft: '10px',
+                paddingRight: '10px',
+                borderRadius: '10px',
+                backgroundColor: inviteHover ? '#0081fa' : 'white',
+                color: inviteHover ? 'white' : '#0081fa',
+                fontFamily: ''
+              }}onClick={(e) => {
+                window.location.href = 'https://localhost:3000/auth/discord';
+              }}>Login</button>
+        </div>
         </div>
     )
 };
