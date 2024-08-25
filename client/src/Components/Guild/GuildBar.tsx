@@ -2,6 +2,8 @@ import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import { INVITE_URL } from "../Home";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import GuildLeftPanel from "./GuildLeftPanel";
+
 export class Guild {
     public guildId: string;
     public id: number | undefined;
@@ -9,7 +11,9 @@ export class Guild {
     public name: string | undefined;
     public image: string | undefined;
     public joinDate: string | undefined;
+    public bannerURL: string | undefined;
     public memberLeaveChannel: string;
+    public ownerId: string | undefined;
   
     constructor (guildId: string, memberJoinChannel:string, memberLeaveChannel:string) {
       this.guildId = guildId;
@@ -19,6 +23,7 @@ export class Guild {
   }
   
   export class UserDb {
+    public discordId: string | undefined;
     public name: string | undefined;
     public guildId: string | undefined;
     public avatar: string | undefined;
@@ -40,7 +45,7 @@ const GuildStyle:React.CSSProperties = {
 
 const GuildBar = (props: any) => { 
   const [inviteHover, setInviteHover] = useState<boolean>(false);
-  const [guildHover, setGuildHover] = useState<number>(-1);
+  const [guildHover, setGuildHover] = useState<number | undefined>(undefined);
   // useEffect(() => {
   //   console.log(props.guilds.at(props.guild))
   // }, [props.guild])
@@ -49,10 +54,10 @@ const GuildBar = (props: any) => {
             display: "flex",
             flexDirection: 'column',
             alignItems: 'flex-start',
-            justifyContent: 'center',
+            justifyContent: props.guild === undefined ? 'center' : 'flex-start',
             height: "100vh",
             fontSize: "8px",
-            paddingRight: "20px",
+            paddingRight: props.guild === undefined ? "20px" : 0,
             // width: 'auto+10px',
             width: 'auto',
             // position:'relative',
@@ -64,11 +69,15 @@ const GuildBar = (props: any) => {
           }}>
 
             {
+              props.guilds && props.guild !== undefined
+              ?
+                <GuildLeftPanel users={props.users} setGuild={props.setGuild} guild={props.guilds.at(props.guild)}/>
+              :
               props.guilds?.map((value: Guild, index: number) => {
                 return (
                   <div key={index} onMouseEnter={() => setGuildHover(index)} onMouseLeave={() => setGuildHover(-1)} style={{
                     ...GuildStyle,
-                    backgroundColor: props.guilds?.at(props.guild)?.guildId === value.guildId ? '#2a6100' : (guildHover == index ? 'white': ''),
+                    backgroundColor: (guildHover == index ? 'white': ''),
                     // backgroundColor: guildHover === index ? 'white': 'green',
                     color: guildHover === index ? 'green' : 'white'
 
@@ -84,14 +93,14 @@ const GuildBar = (props: any) => {
                 )
               })    
             }
-             <div onMouseEnter={() => setInviteHover(true)} onMouseLeave={() => setInviteHover(false)} key={props.guilds?.length} style={{...GuildStyle, fontSize: "10px", paddingLeft:"10px", backgroundColor: !inviteHover ? "orange" : 'white'}} onClick={(e) => {
+             {/* <div onMouseEnter={() => setInviteHover(true)} onMouseLeave={() => setInviteHover(false)} key={props.guilds?.length} style={{...GuildStyle, fontSize: "10px", paddingLeft:"10px", backgroundColor: !inviteHover ? "orange" : 'white'}} onClick={(e) => {
                 window.open(INVITE_URL);
               }}>
                 <AddCircleIcon style={{ color: inviteHover ? 'orange' : 'white', width:"70px", paddingTop: "10px", height: "70px"}}/>
                 <h1 style={{
                   color: inviteHover ? 'orange' : 'white'
                 }}>invite to server</h1>
-              </div>
+              </div> */}
         </div> 
     )
 };

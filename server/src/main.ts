@@ -74,7 +74,6 @@ app.get('/auth/discord/callback', passport.authenticate('discord', {
 })
 
 app.get('/api/user', (req, res) => {
-    console.log(req.isAuthenticated());
   if(req.isAuthenticated())
     res.json(req.user);
     

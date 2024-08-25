@@ -22,8 +22,8 @@ const ChartStyle: React.CSSProperties = {
 const GuildInfo = (props: Props) => {
 
     useEffect(() => {
-        console.log(props.users)
-    }, [props.users]);
+        console.log('guild: ' + props.guild)
+    }, []);
     return (
         <div className="GuildInfo" style={{
             color: 'white',
@@ -37,6 +37,9 @@ const GuildInfo = (props: Props) => {
             width: "100%",
         }}>
             <h1>{props.guild === null ? 'Loading..' : props.guild?.name}</h1>
+            {/* {
+                
+            } */}
             {
                 props.guild &&
                 <div style={{

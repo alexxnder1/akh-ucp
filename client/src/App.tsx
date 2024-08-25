@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios, { AxiosResponse } from 'axios';
 import GuildInfo from './Components/Guild/GuildInfo';
@@ -22,7 +21,7 @@ export class UserAuth {
 function App() {
   const [user, setUser] = useState<UserAuth | undefined | null>(undefined);
   const [guilds, setGuilds] = useState<Array<Guild> | null>(null);
-  const [guild, setGuild] = useState<number>(0);
+  const [guild, setGuild] = useState<number | undefined>(undefined);
   const [users, setUsers] = useState<Array<UserDb>>([]);
 
   useEffect(() => {
@@ -42,11 +41,14 @@ function App() {
   }, [user]);
 
   useEffect(() => {
-    axios.get('https://localhost:3000/users/' + guilds?.at(guild)?.guildId).then((res: AxiosResponse) => {
-      setUsers(res.data as unknown as Array<UserDb>)
-      console.log(res.data);
-      // setGuild(0);
-    });
+    if(guilds && guild)
+    {
+      axios.get('https://localhost:3000/users/' + guilds?.at(guild!)?.guildId).then((res: AxiosResponse) => {
+        setUsers(res.data as unknown as Array<UserDb>)
+        console.log(res.data);
+        // setGuild(0);
+      });
+    }
   }, [guilds, guild])
 
 
@@ -61,11 +63,11 @@ function App() {
       {
         user !== null
         ?
-        <GuildBar guilds={guilds} setGuild={setGuild} guild={guild}/>
+        <GuildBar guilds={guilds} users={users} setGuild={setGuild} guild={guild}/>
         :  
         <Home/>
       }
-      <GuildInfo guild={guilds?.at(guild)} users={users}/> 
+      <GuildInfo guild={guild !== undefined ? guilds?.at(guild) : undefined} users={users}/> 
       <DiscordUser user={user !== null ? user : undefined}/>
     </div>
   );
