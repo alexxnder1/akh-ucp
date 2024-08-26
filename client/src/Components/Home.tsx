@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { UserAuth } from "../App";
+import axios, { AxiosResponse } from "axios";
 
 export const INVITE_URL: string = 'https://discord.com/oauth2/authorize?client_id=937011056260313099&scope=bot&permissions=1099511627775';
+
 
 const Home = () => {
   const [loginHover, setLoginHover] = useState<boolean>(false); 
   const [inviteHover, setInviteHover] = useState<boolean>(false); 
+  
+  useEffect(() => {
+    axios.get('https://localhost:3000/api/user', { withCredentials: true } ).then((res: AxiosResponse) => {
+      window.location.href = 'https://localhost:3001/dashboard';
+            
+    }).catch(() => {
+      // window.location.href = 'https://localhost:3001/'
+    })
+  }, []);
 
     return (
         <div style={{

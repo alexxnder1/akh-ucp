@@ -103,6 +103,8 @@ app.get('/guilds/:owner_id', (req, result) => {
     });
 });
 
+
+
 app.get('/logout', (req, result, next) => {
     req.logout((err) => {
         if(err)
@@ -113,12 +115,14 @@ app.get('/logout', (req, result, next) => {
 });
 
 app.get('/users/:guild_id', (req, result) => {
-    database.query('select * from users where guildId=?', [req.params.guild_id], (err, res) => {
+    database.query('select * from users where guildId=?', [req.params['guild_id']], (err, res) => {
         if(err)
         {
             console.error(err);
             return;
         }
+
+        console.log(req.params['guild_id'])
 
         result.json(res);
     });
