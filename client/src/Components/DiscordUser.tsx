@@ -15,7 +15,7 @@ const DiscordUser = (props: Props) => {
     return (
         <div id="discord-user" style={{
             // backgroundColor: 'orange',
-            position: 'absolute',
+            position: 'fixed',
             bottom: 0,
             right: 0,
             fontSize: "10px",
@@ -34,8 +34,8 @@ const DiscordUser = (props: Props) => {
                 hover &&
                 <button onMouseEnter={() => {setHover(true); setHoverButton(true)}} onMouseLeave={() => {setHover(false) ; setHoverButton(false)}} style={{
                     position: 'absolute',   
-                    top: '52%', // Center vertically
-                    right:"-1%",
+                    top: '50%',
+                    
                     margin: 0,
                     transform: 'translate(-50%, -50%)', // Offset by 50% of its own size
                  

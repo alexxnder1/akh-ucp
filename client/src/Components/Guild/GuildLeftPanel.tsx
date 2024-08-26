@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Guild } from "./GuildBar";
+import { Guild } from "./Guilds";
 import BarChartIcon from '@mui/icons-material/BarChart';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DiscordUser from "../DiscordUser";
 import { UserAuth } from "../../App";
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 class Props {
     public guild: Guild | undefined;
     public user: UserAuth | undefined;
@@ -20,9 +22,12 @@ class Option {
     }
 }
 
-const GuildInfo = (props: Props) => {
+const GuildLeftPanel = (props: Props) => {
     const [options, setOptions] = useState<Array<Option>>([
-        new Option('Stats', <BarChartIcon/>, '#00858c')
+        new Option('Overview', <BarChartIcon/>, '#00858c'),
+        new Option('Users', <PeopleAltIcon/>, '#009c34'),
+        new Option('Logs', <StickyNote2Icon/>, '#75006d')
+
     ]);
     const [optionHover, setOptionHover] = useState<number>(-1);
     return (
@@ -30,11 +35,14 @@ const GuildInfo = (props: Props) => {
             backgroundColor: '#212121',
             // opacity: 0.9,
             display: 'flex',
+            position: 'fixed',
             color: 'white',
             flexDirection:"column",
             paddingLeft: "5px",
+            paddingRight: '5px',
+            // marginRight:"200px",
             // width: "100",
-            height: '100%',
+            height: '200vh',
             
             // position: 'absolute'
         }}>
@@ -59,24 +67,30 @@ const GuildInfo = (props: Props) => {
 
             <div style={{
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
                 // width: '100',
+                gap: '10px',
+                marginTop: "40px",
                 // backgroundColor: 'orange',
-                // height: '100'
+                // height: '100vh',
+                // overflowY: 'auto',
+                // objectFit:'cover',
                 // marginTop: '50px'
             }}>
+                <DiscordUser user={props.user}/>
                 {
                     options.map((option: Option, index: number) => {
                         return (
                             <div onClick={() => {
-                                if(optionHover !== index)
+                                // if(optionHover !== index)
                                     window.location.href = window.location.pathname.split('/')[0] + option.name.toLowerCase()
                             }} onMouseEnter={() => setOptionHover(index)} onMouseLeave={() => setOptionHover(-1)} style={{
                                 // backgroundColor: ''
-                                border: `${option.color} double 1px`,
+                                // border: `${option.color} double 1px`,
                                 textAlign: 'left',
+                                cursor: 'pointer',
                                 color :`${optionHover === index ? 'white' : option.color}`,
-                                backgroundColor :`${optionHover !== index ? '' : option.color}`,
+                                // backgroundColor :`${optionHover !== index ? '' : option.color}`,
                                 display: 'flex',
                                 alignItems: 'center',
                                 // fontFamily: 'Inter',
@@ -92,10 +106,9 @@ const GuildInfo = (props: Props) => {
                         )
                     })  
                 }
-                <DiscordUser user={props.user}/>
             </div>
         </div>
     )
 };
 
-export default GuildInfo;
+export default GuildLeftPanel;

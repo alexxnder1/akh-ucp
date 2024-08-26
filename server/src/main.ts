@@ -122,7 +122,18 @@ app.get('/users/:guild_id', (req, result) => {
             return;
         }
 
-        console.log(req.params['guild_id'])
+        result.json(res);
+    }); 
+});
+
+
+app.get('/logs/:guild_id', (req, result) => {
+    database.query('select * from logs where guildId=?', [req.params['guild_id']], (err, res) => {
+        if(err)
+        {
+            console.error(err);
+            return;
+        }
 
         result.json(res);
     });

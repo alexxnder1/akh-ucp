@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import axios, { AxiosResponse } from 'axios';
 import Home from './Components/Home';
-import Stats from './Components/Guild/Options/Stats';
+import Overview from './Components/Guild/Options/Overview';
 import { BrowserRouter as Router, Route, Routes, useParams, Navigate } from 'react-router-dom';
 import Dashboard from './Components/Dashboard';
 import ErrorNotFound from './Components/ErrorNotFound';
+import Users from './Components/Guild/Options/Users';
+import Logs from './Components/Guild/Options/Logs';
 
 export class UserAuth {
   public username: string | undefined;
@@ -48,7 +50,9 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
-          <Route path='/guilds/:owner_id/:index/stats' element={<Stats/>}/>
+          <Route path='/guilds/:owner_id/:index/overview' element={<Overview/>}/>
+          <Route path='/guilds/:owner_id/:index/users' element={<Users/>}/>
+          <Route path='/guilds/:owner_id/:index/logs' element={<Logs/>}/>
 
           <Route path='/404' element={<ErrorNotFound/>}/>
           <Route path='*' element={<ErrorNotFound/>}/>

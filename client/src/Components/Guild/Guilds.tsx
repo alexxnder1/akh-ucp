@@ -5,6 +5,15 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 // import GuildLeftPanel from "./GuildLeftPanel";
 import { UserAuth } from "../../App";
 
+export class Channel {
+  public name: string; 
+  public id: string;
+  constructor(name: string, id: string) {
+      this.name= name;
+      this.id = id;
+  }
+}
+
 export class Guild {
     public guildId: string;
     public id: number | undefined;
@@ -14,6 +23,7 @@ export class Guild {
     public joinDate: string | undefined;
     public bannerURL: string | undefined;
     public memberLeaveChannel: string;
+    public textChannels: Array<Channel> = [];
     public ownerId: string | undefined;
   
     constructor (guildId: string, memberJoinChannel:string, memberLeaveChannel:string) {
@@ -48,7 +58,7 @@ class Props {
   public user: UserAuth | undefined;
 }
 
-const GuildBar = (props: Props) => { 
+const Guilds = (props: Props) => { 
   const [inviteHover, setInviteHover] = useState<boolean>(false);
   const [guildHover, setGuildHover] = useState<number | undefined>(undefined);
  
@@ -105,7 +115,7 @@ const GuildBar = (props: Props) => {
                   color: guildHover === index ? 'green' : 'white'
 
                 }} onClick={(e) => {
-                  window.location.href = `https://localhost:3001/guilds/${props.user?.id}/${index}/stats`
+                  window.location.href = `https://localhost:3001/guilds/${props.user?.id}/${index}/overview`
                   // props.setGuild(index)
                 }}>
                   <img key={index} src={value.image} width={80} height={80} style={{
@@ -137,4 +147,4 @@ const GuildBar = (props: Props) => {
     )
 };
 
-export default GuildBar;
+export default Guilds;

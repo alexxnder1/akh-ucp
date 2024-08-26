@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { UserAuth } from "../App";
 import axios, { AxiosResponse } from "axios";
 import DiscordUser from "./DiscordUser";
-import GuildBar from "./Guild/GuildBar";
+import Guilds from "./Guild/Guilds";
 
 class Props {
     public user: UserAuth | undefined;
@@ -31,7 +31,7 @@ const Dashboard = (props: any)  => {
             // backgroundColor:'red',
             position: 'relative'
         }}>
-            <GuildBar user={user}/> 
+            <Guilds user={user}/> 
       {/* <OptionsContent options={options} optionHover={optionHover}/> */}
 
             <DiscordUser user={user}/>
