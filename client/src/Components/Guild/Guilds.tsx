@@ -38,8 +38,18 @@ export class Guild {
     public name: string | undefined;
     public guildId: string | undefined;
     public avatar: string | undefined;
-  }
 
+    // 
+    public coins: number | undefined;
+    public totalCoinflips: number | undefined;
+    public coinflipWins: number | undefined;
+    public coinflipLoss: number | undefined;
+    public winRate: number | undefined;
+    public lossRate: number | undefined;
+    
+    public deleteTimestamp: number | undefined;
+    // public : number | undefined;
+  }
 const GuildStyle:React.CSSProperties = {
   
   color:"white",

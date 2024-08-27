@@ -8,6 +8,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 class Props {
     public guild: Guild | undefined;
+    public id: number = -1;
     public user: UserAuth | undefined;
 }
 
@@ -70,7 +71,7 @@ const GuildLeftPanel = (props: Props) => {
                 flexDirection: 'column',
                 // width: '100',
                 gap: '10px',
-                marginTop: "40px",
+                marginTop: "20px",
                 // backgroundColor: 'orange',
                 // height: '100vh',
                 // overflowY: 'auto',
@@ -83,7 +84,26 @@ const GuildLeftPanel = (props: Props) => {
                         return (
                             <div onClick={() => {
                                 // if(optionHover !== index)
-                                    window.location.href = window.location.pathname.split('/')[0] + option.name.toLowerCase()
+                                switch(option.name.toLowerCase())
+                                {
+                                    case 'overview':
+                                        {
+                                            window.location.href = `${window.location.origin}/guilds/${props.user?.id}/${props.id}/overview`;
+                                            break;
+                                        }
+                                        
+                                    case 'users':
+                                        {
+                                            window.location.href = `${window.location.origin}/guilds/${props.user?.id}/${props.id}/users`;
+
+                                            break;
+                                        }
+                                    case 'logs':
+                                        {
+                                            window.location.href = `${window.location.origin}/guilds/${props.user?.id}/${props.id}/logs`;
+                                            break;
+                                        }
+                                }
                             }} onMouseEnter={() => setOptionHover(index)} onMouseLeave={() => setOptionHover(-1)} style={{
                                 // backgroundColor: ''
                                 // border: `${option.color} double 1px`,

@@ -8,6 +8,7 @@ import Dashboard from './Components/Dashboard';
 import ErrorNotFound from './Components/ErrorNotFound';
 import Users from './Components/Guild/Options/Users';
 import Logs from './Components/Guild/Options/Logs';
+import User from './Components/User/User';
 
 export class UserAuth {
   public username: string | undefined;
@@ -53,6 +54,7 @@ function App() {
           <Route path='/guilds/:owner_id/:index/overview' element={<Overview/>}/>
           <Route path='/guilds/:owner_id/:index/users' element={<Users/>}/>
           <Route path='/guilds/:owner_id/:index/logs' element={<Logs/>}/>
+          <Route path='/guilds/:owner_id/:index/user/:user_id' element={<User/>}/>
 
           <Route path='/404' element={<ErrorNotFound/>}/>
           <Route path='*' element={<ErrorNotFound/>}/>

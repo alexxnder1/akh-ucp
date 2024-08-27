@@ -66,7 +66,7 @@ const Overview = () => {
             // padding: '20px',
             boxSizing: 'border-box' 
         }}>
-            <GuildLeftPanel guild={guild} user={user} />
+            <GuildLeftPanel id={parseInt(index!)} guild={guild} user={user} />
             <div style={{
                 flex: 1, 
                 display: 'flex',

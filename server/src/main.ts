@@ -121,8 +121,21 @@ app.get('/users/:guild_id', (req, result) => {
             console.error(err);
             return;
         }
-
+        
         result.json(res);
+    }); 
+});
+
+
+app.get('/guilds/:guild_id/user/:user_id', (req, result) => {
+    database.query('select * from users where guildId=? and discordId=?', [req.params['guild_id'], req.params['user_id']], (err, res) => {
+        if(err)
+        {
+            console.error(err);
+            return;
+        }
+
+        result.json(res[0]);
     }); 
 });
 

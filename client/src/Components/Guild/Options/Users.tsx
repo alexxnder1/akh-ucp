@@ -27,6 +27,7 @@ const Users = () => {
     const [users, setUsers] = useState<Array<Array<UserDb>>>([[]]);
     const [search, setSearch] = useState<string>('');
     const [page, setPage] = useState<number>(0);
+    const [id, setId] = useState<number>(-1);
 
     useEffect(() => {
         axios.get('https://localhost:3000/api/user', { withCredentials: true }).then((res: AxiosResponse) => {
@@ -44,6 +45,7 @@ const Users = () => {
                 const guilds = res.data as Array<Guild>;
                 if (parseInt(index) >= 0 && parseInt(index) < guilds.length) {
                     setGuild(guilds[parseInt(index)]);
+                    setId(parseInt(index));
                 } else {
                     throw new Error('Not found');
                 }
@@ -89,7 +91,7 @@ const Users = () => {
             // padding: '20px',
             boxSizing: 'border-box' 
         }}>
-            <GuildLeftPanel guild={guild} user={user} />
+            <GuildLeftPanel id={id} guild={guild} user={user} />
             <div style={{
                 flex: 1, 
                 display: 'flex',
@@ -138,16 +140,20 @@ const Users = () => {
                     }}>
                     {
                     
-                    users[page].map((user, index) => {
-                        if(user.name?.startsWith(search))
+                    users[page].map((userT, index) => {
+                        if(userT.name?.startsWith(search))
                         {
                             return (
-                                <div id="users" style={{
+                                <div id="user" key={index} onClick={() => {
+                                    console.log(user);
+                                    window.location.href = window.location.origin + `/guilds/${user?.id}/${id}/user/${userT.discordId}/`
+                                }} style={{
                                     backgroundColor: '#182133',
                                     // flex: '1 0 15px',
                                     borderRadius:'10px',
                                     // width: '100%',
                                     width:"280px",
+                                    cursor: 'pointer',
                                     flexBasis: '280px',
                                     // maxWidth: "255px",
                                     
@@ -158,11 +164,11 @@ const Users = () => {
                                     paddingTop:"10px",
                                     flexDirection:'column'
                                 }}>
-                                    <img src={user.avatar} style={{
+                                    <img src={userT.avatar} style={{
                                         width: '90px',
                                         height: '90px'
                                     }}/>
-                                    <h1>{user.name}</h1>
+                                    <h1>{userT.name}</h1>
                                 </div>
                             )
                         }

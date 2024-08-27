@@ -101,7 +101,6 @@ const Logs = () => {
                 if(logsPerPage.length > 0)
                     newLogs.push(logsPerPage);
                 
-                console.log(res.data)
                 setLogs(newLogs);
 
             }).catch(() => {
@@ -111,6 +110,14 @@ const Logs = () => {
         // else window.location.href = 'https://localhost:3001/404';
 
     }, [guild]);
+
+    // const Category = () => [
+    //     return (
+    //         <input type='' id="category">
+
+    //         </div>
+    //     )
+    // ];
 
 
     return (
@@ -122,7 +129,7 @@ const Logs = () => {
             // padding: '20px',
             boxSizing: 'border-box' 
         }}>
-            <GuildLeftPanel guild={guild} user={user} />
+            <GuildLeftPanel id={guilds.findIndex(g => g.guildId === guild?.guildId)} guild={guild} user={user} />
             <div style={{
                 flex: 1, 
                 display: 'flex',
@@ -144,6 +151,7 @@ const Logs = () => {
 
                 </div>
                     <Search tooltip="Start with '#' to search for log ids." search={search} setSearch={setSearch}/>
+                    {/* <Category/> */}
 
                 {/* Guild Information Container */}
                 {guild && (
@@ -184,6 +192,7 @@ const Logs = () => {
                         </thead>
                         <tbody>
                             {
+                                logs.at(page) &&
                                 logs[page].map((log, index) => {
                                     if(log.authorId?.startsWith(search) || log.channelId?.startsWith(search), log.content?.startsWith(search) || log.guildId?.startsWith(search) || (search.startsWith('#') && log.id?.toString() === search.split('#')[1]) || log.type?.startsWith(search))
                                         return (
@@ -234,6 +243,16 @@ const Logs = () => {
                             }
                         </tbody>
                     </table>
+                    <div style={{
+                        display: 'flex',
+                        width:'100%',
+                        justifyContent:'center'
+                    }}>
+                        {
+                            !(logs.at(page)) &&
+                            <h1>No results</h1>
+                        }
+                    </div>
                     {
                         logs.length > 1
                         &&
