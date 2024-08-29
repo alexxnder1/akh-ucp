@@ -5,6 +5,7 @@ import { UserAuth } from '../../App';
 import GuildLeftPanel from '../Guild/GuildLeftPanel';
 import { Guild, UserDb } from '../Guild/Guilds';
 import Main from './Main';
+import { useNotification } from '../Notification';
 
 export const Buttons: React.CSSProperties = {
     cursor: 'pointer', fontFamily:'Inter', backgroundColor: '#006094', paddingLeft:'20px', paddingRight:'20px', color:'white', border:'none', fontSize: '20px'
@@ -13,7 +14,6 @@ export const Buttons: React.CSSProperties = {
 export const OPTIONS: Array<string> = ['Coinflip','Coinflip','Coinflip','Coinflip','Coinflip','Coinflip','Coinflip'];
 
 const RenderOption = (props: any) => {
-    console.log(props.option)
     switch(props.option.toLowerCase()) {
         case 'coinflip':
             return <Main user={props.user}/>
@@ -23,6 +23,8 @@ const RenderOption = (props: any) => {
 }
 
 const User = () => {
+    const { addNotification } = useNotification();
+
     const { owner_id, index, user_id } = useParams();
     const [guild, setGuild] = useState<Guild | undefined>(undefined);
     const [auth, setAuth] = useState<UserAuth | undefined>(undefined);
@@ -46,7 +48,6 @@ const User = () => {
                 if (owner_id !== auth.id) throw new Error('Not found');
                 
                 const guilds = res.data as Array<Guild>;
-                console.log(guilds);
                 if (parseInt(index) >= 0 && parseInt(index) < guilds.length) {
                     
                     console.log(guilds[parseInt(index)]);
@@ -70,7 +71,6 @@ const User = () => {
                 window.location.href = 'https://localhost:3001/404';
             });
         }
-
     }, [guild]);
 
     if(user === undefined)
@@ -133,15 +133,16 @@ const User = () => {
                                 &&
                                 <h1 style={{ fontSize: '30px', backgroundColor: '#e3ae00', borderRadius: '10px', }}>👑 Owner</h1>
                             }
-                            {
+                            {/* {
                                 user.deleteTimestamp === null
                                 &&
                                 <h1 style={{ fontSize: '30px', backgroundColor: '#e3ae00', borderRadius: '10px', }}>👑 Owner</h1>
-                            }
+                            } */}
 
                             <h1 style={{ fontSize: '30px'}}>{user.name}</h1>
                             <h1 style={{ opacity: 0.5, cursor: 'pointer' }} onClick={() => {
                                 navigator.clipboard.writeText(user.discordId!);
+                                addNotification('Copied to clipboard', '#32a834')
                             }}>{user.discordId}</h1>
 
                         </div>
