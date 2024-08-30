@@ -54,7 +54,7 @@ export class Guild {
 const GuildStyle:React.CSSProperties = {
   
   color:"white",
-  width: '100%',
+  width: '200px',
   paddingLeft: "10px",
   paddingRight: "10px",
   paddingTop: "10px",
@@ -109,7 +109,7 @@ const Guilds = (props: Props) => {
             </div>
             <div style={{
                display: "flex",
-               gap: '120px',
+              //  gap: '120px',
                flexDirection:'row',
             }}>
               {guilds !== null

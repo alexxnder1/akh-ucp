@@ -16,19 +16,17 @@ class Props {
 class Option {
     public name: string;
     public icon: any;
-    public color: string;
-    constructor (name: string, icon: any, color: string) {
+    constructor (name: string, icon: any) {
         this.name = name;
         this.icon = icon;
-        this.color=color;
     }
 }
 
 const GuildLeftPanel = (props: Props) => {
     const [options, setOptions] = useState<Array<Option>>([
-        new Option('Overview', <BarChartIcon/>, '#00858c'),
-        new Option('Users', <PeopleAltIcon/>, '#009c34'),
-        new Option('Logs', <StickyNote2Icon/>, '#75006d')
+        new Option('Overview', <BarChartIcon/>),
+        new Option('Users', <PeopleAltIcon/>),
+        new Option('Logs', <StickyNote2Icon/> )
 
     ]);
     const [optionHover, setOptionHover] = useState<number>(-1);
@@ -58,9 +56,22 @@ const GuildLeftPanel = (props: Props) => {
                 :
                 <Loading/>
             }
-            <h1 style={{
-                fontSize: "27px"
-            }}>{props.guild?.name}</h1>
+
+            <div style={{
+                display: 'flex',
+                flexDirection:'row',
+                justifyContent:'center',
+                gap: '10px',
+                alignItems: 'center'
+            }}>
+                <img style={{
+                    borderRadius: '100px',
+                    width: '50px',
+                }} src={`${props.guild?.image}`}/>
+                <h1 style={{
+                    fontSize: "27px"
+                }}>{props.guild?.name}</h1>
+            </div>
 
             
             <ArrowBackIcon onClick={(e) => {
@@ -116,7 +127,7 @@ const GuildLeftPanel = (props: Props) => {
                                 // border: `${option.color} double 1px`,
                                 textAlign: 'left',
                                 cursor: 'pointer',
-                                color :`${optionHover === index ? 'white' : option.color}`,
+                                color :`${optionHover !== index ? 'gray' : '#0258e0'}`,
                                 // backgroundColor :`${optionHover !== index ? '' : option.color}`,
                                 display: 'flex',
                                 alignItems: 'center',
