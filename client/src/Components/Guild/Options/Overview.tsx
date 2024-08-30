@@ -23,6 +23,8 @@ const Overview = () => {
     const [users, setUsers] = useState<Array<UserDb>>([]);
 
     useEffect(() => {
+        document.title = `Overview`;
+
         axios.get('https://localhost:3000/api/user', { withCredentials: true }).then((res: AxiosResponse) => {
             setUser(res.data as UserAuth);
         }).catch(() => {

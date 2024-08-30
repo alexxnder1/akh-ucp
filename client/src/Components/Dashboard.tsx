@@ -32,8 +32,6 @@ const Dashboard = (props: any)  => {
             position: 'relative'
         }}>
             <Guilds user={user}/> 
-      {/* <OptionsContent options={options} optionHover={optionHover}/> */}
-
             <DiscordUser user={user}/>
         </div>
     )

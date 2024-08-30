@@ -4,6 +4,7 @@ import { INVITE_URL } from "../Home";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 // import GuildLeftPanel from "./GuildLeftPanel";
 import { UserAuth } from "../../App";
+import Loading from "../Loading/Loading";
 
 export class Channel {
   public name: string; 
@@ -81,78 +82,60 @@ const Guilds = (props: Props) => {
         setGuilds(res.data as unknown as Array<Guild>)
       })
     }
+    document.title = `Guilds`;
+
   }, [props.user]);
-
-  // useEffect(() => {
-  //   if(guilds)
-  //   {
-  //     axios.get('https://localhost:3000/users/' + guilds?.at(guild!)?.guildId).then((res: AxiosResponse) => {
-  //       setUsers(res.data as unknown as Array<UserDb>)
-  //       console.log(res.data);
-  //       // setGuild(0);
-  //     });
-  //   }
-  // }, [guilds])
-
-  // useEffect(() => {
-  //   console.log(props.guilds.at(props.guild))
-  // }, [props.guild])
     return (
         <div style={{
             display: "flex",
             flexDirection: 'column',
-            alignItems: 'flex-start',
+            alignItems: 'center',
             justifyContent: 'center',
-            height: "100vh",
+            // alignSelf:'center',
             fontSize: "8px",
-            paddingRight: "20px",
-            // width: 'auto+10px',
-            width: 'auto',
-            // position:'relative',
-            gap: "20px",
+            gap: '20px',
+            width: '100%',
+            height: '100%',
             textAlign:"center",
-            // marginLeft: "20px",
-            backgroundColor: "#242424"
-            // background: 'rgb(0,0,0)',
           }}>
-            {guilds &&
-            guilds.map((value: Guild, index: number) => {
-              return (
-                <div key={index} onMouseEnter={() => setGuildHover(index)} onMouseLeave={() => setGuildHover(-1)} style={{
-                  ...GuildStyle,
-                  backgroundColor: (guildHover == index ? 'white': ''),
-                  // backgroundColor: guildHover === index ? 'white': 'green',
-                  color: guildHover === index ? 'green' : 'white'
+            <div style={{
+              width: '100%',
+              color: 'white',
+              // backgroundColor: 'orange'
+            }}>
+              <h1 style={{
+                fontSize:'40px'
+              }}>Your Guilds:</h1>
+            </div>
+            <div style={{
+               display: "flex",
+               gap: '120px',
+               flexDirection:'row',
+            }}>
+              {guilds !== null
+              ? guilds.map((value: Guild, index: number) => {
+                return (
+                  <div key={index} onMouseEnter={() => setGuildHover(index)} onMouseLeave={() => setGuildHover(-1)} style={{
+                    ...GuildStyle,
+                    backgroundColor: (guildHover == index ? 'white': ''),
+                    
+                    color: guildHover === index ? 'green' : 'white'
 
-                }} onClick={(e) => {
-                  window.location.href = `https://localhost:3001/guilds/${props.user?.id}/${index}/overview`
-                  // props.setGuild(index)
-                }}>
-                  <img key={index} src={value.image} width={80} height={80} style={{
-                    borderRadius: "50px",
-                    pointerEvents: 'none'
-                  }}></img>
-                  <h1 style={{ pointerEvents: 'none' }} key={index}>{value.name}</h1>
-                </div>
-              )
-            }) 
-          }
-{/* 
-            {
-              guilds
-              ?
-                // <GuildLeftPanel optionHover={props.optionHover} setOptionHover={props.setOptionHover} options={props.options} users={props.users} setGuild={props.setGuild} guild={props.guilds.at(props.guild)}/>
-              :
-   
-            } */}
-             {/* <div onMouseEnter={() => setInviteHover(true)} onMouseLeave={() => setInviteHover(false)} key={props.guilds?.length} style={{...GuildStyle, fontSize: "10px", paddingLeft:"10px", backgroundColor: !inviteHover ? "orange" : 'white'}} onClick={(e) => {
-                window.open(INVITE_URL);
-              }}>
-                <AddCircleIcon style={{ color: inviteHover ? 'orange' : 'white', width:"70px", paddingTop: "10px", height: "70px"}}/>
-                <h1 style={{
-                  color: inviteHover ? 'orange' : 'white'
-                }}>invite to server</h1>
-              </div> */}
+                  }} onClick={(e) => {
+                    window.location.href = `https://localhost:3001/guilds/${props.user?.id}/${index}/overview`
+                    // props.setGuild(index)
+                  }}>
+                    <img key={index} src={value.image} width={80} height={80} style={{
+                      borderRadius: "50px",
+                      pointerEvents: 'none'
+                    }}></img>
+                    <h1 style={{ pointerEvents: 'none' }} key={index}>{value.name}</h1>
+                  </div>
+                )
+              }) 
+              : <Loading/>
+            }
+            </div>
         </div> 
     )
 };

@@ -32,11 +32,12 @@ const Pages = (props: Props) => {
                                     width: '30px',
                                     border: 'none',
                                     fontSize: '20px',
+                                    // padding:'15px',
                                     backgroundColor: props.page === index ? 'grey' : 'white',
                                     cursor: props.page !== index ? 'pointer' : 'auto',
                                     borderRadius: '10px',
                                     // backgroundColor: ''
-                                    height: '30px'
+                                    height: '35px'
                                 }}  onClick={() => props.setPage(index)} >
                                     {
                                         index+1

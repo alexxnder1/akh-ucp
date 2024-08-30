@@ -6,6 +6,7 @@ import DiscordUser from "../DiscordUser";
 import { UserAuth } from "../../App";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
+import Loading from "../Loading/Loading";
 class Props {
     public guild: Guild | undefined;
     public id: number = -1;
@@ -33,7 +34,7 @@ const GuildLeftPanel = (props: Props) => {
     const [optionHover, setOptionHover] = useState<number>(-1);
     return (
         <div className="GuildInfo" style={{
-            backgroundColor: '#212121',
+            backgroundColor: '#202020',
             // opacity: 0.9,
             display: 'flex',
             position: 'fixed',
@@ -47,12 +48,18 @@ const GuildLeftPanel = (props: Props) => {
             
             // position: 'absolute'
         }}>
-            <img src={props.guild?.bannerURL} style={{
-                width: '300px',
-                height: '140px'
-            }}/>
+            {
+                props.guild?.bannerURL 
+                ?
+                    <img src={props.guild?.bannerURL} style={{
+                        width: '300px',
+                        height: '140px'
+                    }}/>
+                :
+                <Loading/>
+            }
             <h1 style={{
-                fontSize: "20px"
+                fontSize: "27px"
             }}>{props.guild?.name}</h1>
 
             

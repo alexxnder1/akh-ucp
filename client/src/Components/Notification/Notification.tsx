@@ -1,4 +1,6 @@
-import { useSpring } from '@react-spring/web';
+import './Notification.module.css';
+import styles from './Notification.module.css'; // Import the CSS module
+
 import React, { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
 
 interface Notification {
@@ -28,12 +30,15 @@ export const NotificationProvider:  React.FC<{ children: ReactNode }> = ({ child
             {id, content, color}
         ])
 
+        var audio = new Audio('/notif.mp3');
+        audio.play();
+
         if(timersRef.current.has(id))
             clearTimeout(timersRef.current.get(id))
 
         var timeout = setTimeout(() => {
             removeNotification(id);
-        }, 700)
+        }, 2000)
         timersRef.current.set(id, timeout);
 
     };
@@ -77,7 +82,8 @@ export const NotificationProvider:  React.FC<{ children: ReactNode }> = ({ child
                 {
                     notifications.map((notif, index) => {
                         return (
-                            <div id='notification' key={index} style={{
+                            <div                             className={styles.notification}
+                            key={index} style={{
                                 backgroundColor: `${notif.color}`,
                                 borderRadius: '10px',
                                 // animat

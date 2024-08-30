@@ -30,6 +30,7 @@ const Users = () => {
     const [id, setId] = useState<number>(-1);
 
     useEffect(() => {
+        document.title = `Users`;
         axios.get('https://localhost:3000/api/user', { withCredentials: true }).then((res: AxiosResponse) => {
             setUser(res.data as UserAuth);
         }).catch(() => {
@@ -161,7 +162,7 @@ const Users = () => {
                                     display:'flex',
                                     alignItems:'center',
                                     // height: "150px",
-                                    paddingTop:"10px",
+                                    paddingTop:"15px",
                                     flexDirection:'column'
                                 }}>
                                     <img src={userT.avatar} style={{

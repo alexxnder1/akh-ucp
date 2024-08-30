@@ -5,10 +5,12 @@ import { UserAuth } from '../../App';
 import GuildLeftPanel from '../Guild/GuildLeftPanel';
 import { Guild, UserDb } from '../Guild/Guilds';
 import Main from './Main';
-import { useNotification } from '../Notification';
+import { useNotification } from '../Notification/Notification';
 
 export const Buttons: React.CSSProperties = {
-    cursor: 'pointer', fontFamily:'Inter', backgroundColor: '#006094', paddingLeft:'20px', paddingRight:'20px', color:'white', border:'none', fontSize: '20px'
+    
+    fontFamily: "Titillium Web",
+    cursor: 'pointer', backgroundColor: '#2950ff', borderRadius: '5px',paddingTop: '10px', paddingBottom:'10px', paddingLeft:'20px', paddingRight:'20px', color:'white', border:'none', fontSize: '20px'
 }
 
 export const OPTIONS: Array<string> = ['Coinflip','Coinflip','Coinflip','Coinflip','Coinflip','Coinflip','Coinflip'];
@@ -40,10 +42,9 @@ const User = () => {
             window.location.href = 'https://localhost:3001/';
         });
     }, []);
-
+    
     useEffect(() => {
         if (auth !== undefined && owner_id !== undefined && index !== undefined) {
-            console.log(owner_id + " sex  " + index)
             axios.get(`https://localhost:3000/guilds/${owner_id}`).then((res: AxiosResponse) => {
                 if (owner_id !== auth.id) throw new Error('Not found');
                 
@@ -52,7 +53,7 @@ const User = () => {
                     
                     console.log(guilds[parseInt(index)]);
                     setGuild(guilds[parseInt(index)]);
-
+                    
                 } else {
                     throw new Error('Not found');
                 }
@@ -61,7 +62,7 @@ const User = () => {
             });
         }
     }, [auth]);
-
+    
     useEffect(() => {
         if (auth !== undefined && guild !== undefined) {
             console.log(`https://localhost:3000/guilds/${guild.guildId}/user/${user_id}`)
@@ -75,6 +76,8 @@ const User = () => {
 
     if(user === undefined)
         return <>Loading...</>;
+
+    document.title = `${user?.name}'s profile`;
 
     return (
         <div className="User" style={{
@@ -154,7 +157,7 @@ const User = () => {
                             marginTop:'50px',
                             marginLeft: "50px",
 
-                            gap: '10px',
+                            gap: '15px',
                         }}>
                             <div style={{ display:'flex',  width:'100%',  gap: '20px', }}>           
                                 {

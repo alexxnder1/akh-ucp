@@ -9,7 +9,7 @@ import ErrorNotFound from './Components/ErrorNotFound';
 import Users from './Components/Guild/Options/Users';
 import Logs from './Components/Guild/Options/Logs';
 import User from './Components/User/User';
-import { NotificationProvider } from './Components/Notification';
+import { NotificationProvider } from './Components/Notification/Notification';
 
 export class UserAuth {
   public username: string | undefined;

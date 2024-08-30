@@ -7,6 +7,8 @@ import GuildLeftPanel from '../GuildLeftPanel';
 import { Channel, Guild, UserDb } from '../Guilds';
 import Pages from '../Pages';
 import Search from '../../Search';
+import InputList from '../../InputList';
+import { useNotification } from '../../Notification/Notification';
 
 export class Log {  
     public id: number | undefined;
@@ -38,24 +40,36 @@ export const TopTable: React.CSSProperties = {
 
 const Logs = () => {
     const { owner_id, index } = useParams();
+    const { addNotification } = useNotification();
+
     const [guild, setGuild] = useState<Guild | undefined>(undefined);
     const [guilds, setGuilds] = useState<Array<Guild>>([]);
     const [user, setUser] = useState<UserAuth | undefined>(undefined);
+    
+    const [copyLogs, setCopyLogs] = useState<Array<Array<Log>>>([[]]);
     const [logs, setLogs] = useState<Array<Array<Log>>>([[]]);
+
     const [authorHover, setAuthorHover] = useState<number>(-1);
     const [textChannelHover, setTextChannelHover] = useState<number>(-1);
     const [page, setPage] = useState<number>(0);
     const [search, setSearch] = useState<string>('');
+    const [category, setCategory] = useState<string>('chat');
 
     const [waitCursor, setWaitCursor] = useState<boolean>(false);
 
     useEffect(() => {
+        document.title = `Logs`;
         axios.get('https://localhost:3000/api/user', { withCredentials: true }).then((res: AxiosResponse) => {
             setUser(res.data as UserAuth);
         }).catch(() => {
             // window.location.href = 'https://localhost:3001/404';
         });
     }, []);
+
+    useEffect(() => {
+        setLogs(GenerateLogPages());
+    }, [search, category]);
+    
 
     useEffect(() => {
         if(user === undefined)
@@ -83,26 +97,9 @@ const Logs = () => {
     useEffect(() => {
         if (guild !== undefined) {
             axios.get(`https://localhost:3000/logs/${guild.guildId}`).then((res: AxiosResponse) => {
-                var logs = res.data as Array<Log>;
-                console.log(guild.guildId);
-                var newLogs: Array<Array<Log>> = [];
-                var logsPerPage: Array<Log> = [];
-
-                logs.forEach((user, index) => {
-                    logsPerPage.push(user);
-
-                    if((index+1) % LOGS_PER_PAGE === 0)
-                    {
-                        newLogs.push(logsPerPage);
-                        logsPerPage = [];
-                    }
-                });
-
-                if(logsPerPage.length > 0)
-                    newLogs.push(logsPerPage);
-                
-                setLogs(newLogs);
-
+                var logs = GenerateLogPages(res.data as Array<Log>);
+                setLogs(logs);
+                setCopyLogs(logs);
             }).catch(() => {
                 // window.location.href = 'https://localhost:3001/404';
             });
@@ -119,6 +116,48 @@ const Logs = () => {
     //     )
     // ];
 
+    const GenerateLogPages = (arrayFrom: Array<Log> | undefined=undefined): Array<Array<Log>> => {
+        var ar: Array<Log> = [];
+        if(arrayFrom !== undefined)
+            ar = arrayFrom;
+
+        for(let i = 0; i < copyLogs.length; i++)
+        {
+            for(let j = 0; j < copyLogs[i].length ; j++)
+            {
+                var log = copyLogs[i][j];
+                if(log.type === category) {
+                    if(log.authorId?.startsWith(search) || 
+                        log.channelId?.startsWith(search) ||
+                        log.content?.startsWith(search) || 
+                        log.guildId?.startsWith(search) ||
+                        (search.startsWith('#') && log.id?.toString() === search.split('#')[1]) ||
+                        log.type?.startsWith(search)
+                    ) ar.push(log);
+                }
+            }
+        }
+        
+
+        var newlogs: Array<Array<Log>> = [];
+
+        var logsPerPage: Array<Log> = [];
+        ar.forEach((user, index) => {
+            logsPerPage.push(user);
+
+            if((index+1) % LOGS_PER_PAGE === 0)
+            {
+                newlogs.push(logsPerPage);
+                logsPerPage = [];
+            }
+
+        });
+
+        if(logsPerPage.length > 0)
+            newlogs.push(logsPerPage);
+        
+        return newlogs;
+    };
 
     return (
         <div className="Logs" style={{
@@ -150,10 +189,18 @@ const Logs = () => {
                     <h1 style={{ margin: 0 }}>Logs</h1>  
 
                 </div>
-                    <Search tooltip="Start with '#' to search for log ids." search={search} setSearch={setSearch}/>
-                    {/* <Category/> */}
 
-                {/* Guild Information Container */}
+                <div style={{
+                    display: 'flex'
+                }}>
+                    <Search tooltip="Start with '#' to search for log ids." search={search} setSearch={setSearch}/>
+                    <InputList onChange={(val) => {
+                        setCategory(val);                           
+        // applySearchIndex();
+// 
+                    }} values={['chat', 'kick', 'ban']}/>
+                </div>
+
                 {guild && (
                     <div style={{
                         display: 'inline-flex',
@@ -179,9 +226,7 @@ const Logs = () => {
                             <tr>
                                 <th style={{...TopTable, cursor: 'cell'}} scope='col' onClick={() => {
                                     var logsCopy= [...logs];
-
                                     (logsCopy[page] as any) = logsCopy.at(page)?.sort((a,b) => (logsCopy[page].at(0)!.id as any) > (logsCopy[page].at(logsCopy[page].length-1)!.id as any) ?  a.id!-b.id! :  b.id!-a.id! );
-
                                     setLogs(logsCopy)
                                 }}>ID</th>
                                 <th style={TopTable} scope='col'>Type</th>
@@ -194,7 +239,7 @@ const Logs = () => {
                             {
                                 logs.at(page) &&
                                 logs[page].map((log, index) => {
-                                    if(log.authorId?.startsWith(search) || log.channelId?.startsWith(search), log.content?.startsWith(search) || log.guildId?.startsWith(search) || (search.startsWith('#') && log.id?.toString() === search.split('#')[1]) || log.type?.startsWith(search))
+                                    
                                         return (
                                         <tr>
                                             <th scope='row' style={ContentBorder}>{log.id}</th>
@@ -208,7 +253,10 @@ const Logs = () => {
                                                     setWaitCursor(true)
                                                     // document.execCommand();
                                                     navigator.clipboard.writeText(log.channelId!)
-                                                        .then(() => console.log('Copied in clipboard ' + log.channelId!))
+                                                        .then(() => {
+                                                            console.log('Copied in clipboard ' + log.channelId!)
+                                                            addNotification('Copied to clipboard', '#32a834')
+                                                        })
                                                         .catch(() => console.log('Failed to copy in clipboard'))
     
                                                     setTimeout(() => {
@@ -227,7 +275,10 @@ const Logs = () => {
                                                     setWaitCursor(true)
                                                     // document.execCommand();
                                                     navigator.clipboard.writeText(log.authorId!)
-                                                        .then(() => console.log('Copied in clipboard ' + log.authorId!))
+                                                        .then(() =>{
+                                                            console.log('Copied in clipboard ' + log.authorId!)
+                                                            addNotification('Copied to clipboard', '#32a834')
+                                                        })
                                                         .catch(() => console.log('Failed to copy in clipboard'))
 
                                                     setTimeout(() => {

@@ -1,0 +1,15 @@
+@keyframes test {
+    0% {
+        opacity :0
+    }
+    50% {
+        opacity: 1
+    }
+    100% {
+        opacity :0
+    }
+}
+
+.notification {
+    animation: test 2.2s;
+}

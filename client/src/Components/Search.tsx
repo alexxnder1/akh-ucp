@@ -17,6 +17,7 @@ const Search = (props: Props) => {
             color: 'white',
             padding: '10px',                    
             width: '350px',
+            height :'50px',
             fontSize: '20px',
             // height: '50px'
         }}/>
