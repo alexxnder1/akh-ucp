@@ -10,6 +10,7 @@ import Users from './Components/Guild/Options/Users';
 import Logs from './Components/Guild/Options/Logs';
 import User from './Components/User/User';
 import { NotificationProvider } from './Components/Notification/Notification';
+import Top from './Components/Guild/Options/Top';
 
 export class UserAuth {
   public username: string | undefined;
@@ -56,6 +57,7 @@ function App() {
           <Route path='/guilds/:owner_id/:index/users' element={<Users/>}/>
           <Route path='/guilds/:owner_id/:index/logs' element={<Logs/>}/>
           <Route path='/guilds/:owner_id/:index/user/:user_id' element={<User/>}/>
+          <Route path='/guilds/:owner_id/:index/top' element={<Top/>}/>
 
           <Route path='/404' element={<ErrorNotFound/>}/>
           <Route path='*' element={<ErrorNotFound/>}/>

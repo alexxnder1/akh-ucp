@@ -51,7 +51,7 @@ export class Guild {
     public deleteTimestamp: number | undefined;
     // public : number | undefined;
   }
-const GuildStyle:React.CSSProperties = {
+const GuildStyle: React.CSSProperties = {
   
   color:"white",
   width: '200px',
@@ -112,29 +112,35 @@ const Guilds = (props: Props) => {
               //  gap: '120px',
                flexDirection:'row',
             }}>
-              {guilds !== null
-              ? guilds.map((value: Guild, index: number) => {
-                return (
-                  <div key={index} onMouseEnter={() => setGuildHover(index)} onMouseLeave={() => setGuildHover(-1)} style={{
-                    ...GuildStyle,
-                    backgroundColor: (guildHover == index ? 'white': ''),
-                    
-                    color: guildHover === index ? 'green' : 'white'
-
-                  }} onClick={(e) => {
-                    window.location.href = `https://localhost:3001/guilds/${props.user?.id}/${index}/overview`
-                    // props.setGuild(index)
-                  }}>
-                    <img key={index} src={value.image} width={80} height={80} style={{
-                      borderRadius: "50px",
-                      pointerEvents: 'none'
-                    }}></img>
-                    <h1 style={{ pointerEvents: 'none' }} key={index}>{value.name}</h1>
-                  </div>
-                )
-              }) 
-              : <Loading/>
-            }
+              {guilds === null
+              ?
+              <Loading/>
+              :
+              guilds?.length > 0
+                ? guilds.map((value: Guild, index: number) => {
+                  return (
+                    <div key={index} onMouseEnter={() => setGuildHover(index)} onMouseLeave={() => setGuildHover(-1)} style={{
+                      ...GuildStyle,
+                      backgroundColor: (guildHover == index ? 'white': ''),
+                      
+                      color: guildHover === index ? 'green' : 'white'
+  
+                    }} onClick={(e) => {
+                      window.location.href = `https://localhost:3001/guilds/${props.user?.id}/${index}/overview`
+                      // props.setGuild(index)
+                    }}>
+                      <img key={index} src={value.image} width={80} height={80} style={{
+                        borderRadius: "50px",
+                        pointerEvents: 'none'
+                      }}></img>
+                      <h1 style={{ pointerEvents: 'none' }} key={index}>{value.name}</h1>
+                    </div>
+                  )
+                }) 
+                : <h1>No servers.</h1>
+              
+              }
+              
             </div>
         </div> 
     )

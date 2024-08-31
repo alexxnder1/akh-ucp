@@ -7,6 +7,8 @@ import { UserAuth } from "../../App";
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import Loading from "../Loading/Loading";
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+
 class Props {
     public guild: Guild | undefined;
     public id: number = -1;
@@ -26,13 +28,14 @@ const GuildLeftPanel = (props: Props) => {
     const [options, setOptions] = useState<Array<Option>>([
         new Option('Overview', <BarChartIcon/>),
         new Option('Users', <PeopleAltIcon/>),
-        new Option('Logs', <StickyNote2Icon/> )
+        new Option('Logs', <StickyNote2Icon/> ),
+        new Option('Top', <MilitaryTechIcon/> )
 
     ]);
     const [optionHover, setOptionHover] = useState<number>(-1);
     return (
         <div className="GuildInfo" style={{
-            backgroundColor: '#202020',
+            backgroundColor: '#152045',
             // opacity: 0.9,
             display: 'flex',
             position: 'fixed',
@@ -121,6 +124,12 @@ const GuildLeftPanel = (props: Props) => {
                                             window.location.href = `${window.location.origin}/guilds/${props.user?.id}/${props.id}/logs`;
                                             break;
                                         }
+                                        case 'top':
+                                         {
+                                            // guilds/:owner_id/:index/top
+                                             window.location.href = `${window.location.origin}/guilds/${props.user?.id}/${props.id}/top`;
+                                             break;
+                                         }
                                 }
                             }} onMouseEnter={() => setOptionHover(index)} onMouseLeave={() => setOptionHover(-1)} style={{
                                 // backgroundColor: ''

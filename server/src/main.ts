@@ -8,6 +8,7 @@ import path from 'path';
 import session from 'express-session';
 import passport from 'passport';
 import DiscordStrategy from 'passport-discord';
+
 // import cookieParser from 'cookie-parser';
 // Load the certificate and key
 const privateKey = fs.readFileSync(path.join(__dirname, 'key.pem'), 'utf8');
