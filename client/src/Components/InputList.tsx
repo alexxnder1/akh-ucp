@@ -1,5 +1,6 @@
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import { useState } from "react";
+import { ThemeStyle } from './Theme';
 
 class Props {
     public values: Array<string> = [];
@@ -47,7 +48,7 @@ const InputList = (props: Props) => {
                     gap: '5px',
                     position: 'absolute',
                     top: '100%',
-                    backgroundColor:'#001b45',
+                    backgroundColor:ThemeStyle.secondaryColor,
                     paddingTop: '5px',
                     // paddingBottom:'10px',
                     left: '0',
@@ -65,7 +66,9 @@ const InputList = (props: Props) => {
                             backgroundColor: '#003994',
                             borderRadius: '5px',
                             display: 'flex',
-
+                            alignItems:'center',
+                            height: '20px',
+                            // display:'flex',
                             padding: '10px',
                             cursor: 'pointer' 
                         }}>

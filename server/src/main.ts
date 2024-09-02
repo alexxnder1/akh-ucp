@@ -140,6 +140,16 @@ app.get('/guilds/:guild_id/user/:user_id', (req, result) => {
     }); 
 });
 
+app.get('/guilds/:guild_id/top', (req, result) => {
+    database.query('select * from users where guildId=? and coins > 0 order by coins DESC', [req.params['guild_id']], (err, res) =>{
+        if(err)
+        {
+            console.error(err);
+            return;
+        }
+        result.json(res);
+    });
+});
 
 app.get('/logs/:guild_id', (req, result) => {
     database.query('select * from logs where guildId=?', [req.params['guild_id']], (err, res) => {

@@ -27,8 +27,9 @@ export const Border: React.CSSProperties = {
     // width: '100%'
 }
 export const ContentBorder: React.CSSProperties = {
-    border: '#333333 2px double',
+    border: 'white 1px double',
     padding: '10px',
+    // opacity: 0.7
     
     // width: '100%'
 }
@@ -62,8 +63,10 @@ const Logs = () => {
         axios.get('https://localhost:3000/api/user', { withCredentials: true }).then((res: AxiosResponse) => {
             setUser(res.data as UserAuth);
         }).catch(() => {
-            // window.location.href = 'https://localhost:3001/404';
+            window.location.href = 'https://localhost:3001/';
         });
+        
+        return () => { setLogs([]); setCopyLogs([]) }
     }, []);
 
     useEffect(() => {

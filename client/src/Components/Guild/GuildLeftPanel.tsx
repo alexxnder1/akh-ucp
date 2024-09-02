@@ -8,6 +8,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import Loading from "../Loading/Loading";
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
+import { ThemeStyle } from "../Theme";
 
 class Props {
     public guild: Guild | undefined;
@@ -35,7 +36,7 @@ const GuildLeftPanel = (props: Props) => {
     const [optionHover, setOptionHover] = useState<number>(-1);
     return (
         <div className="GuildInfo" style={{
-            backgroundColor: '#152045',
+            backgroundColor: ThemeStyle.primaryColor,
             // opacity: 0.9,
             display: 'flex',
             position: 'fixed',

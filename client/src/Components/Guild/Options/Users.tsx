@@ -7,6 +7,7 @@ import GuildLeftPanel from '../GuildLeftPanel';
 import { Guild, UserDb } from '../Guilds';
 import Pages from '../Pages';
 import Search from '../../Search';
+import { ThemeStyle } from '../../Theme';
 
 export const USERS_PER_PAGE: number = 28;
 
@@ -90,6 +91,7 @@ const Users = () => {
             flexDirection: 'row',
             width: '100%',
             // padding: '20px',
+
             boxSizing: 'border-box' 
         }}>
             <GuildLeftPanel id={id} guild={guild} user={user} />
@@ -110,7 +112,11 @@ const Users = () => {
                     display: 'flex',
                     // flexDirection: 'flex-start'
                 }}>
-                    <h1 style={{ margin: 0 }}>Users ({users[page].length})</h1>  
+                    {
+                        users.length > 0
+                        &&
+                        <h1 style={{ margin: 0 }}>Users ({users.at(page) && users[page].length})</h1>  
+                    }
                 </div>
                 
                 {/* Styling for the placeholder color */} 
@@ -122,7 +128,11 @@ const Users = () => {
                 }            
                 </style> 
 
-                <Search search={search} setSearch={setSearch}/>
+                {
+                    users.length > 0 
+                    &&
+                    <Search search={search} setSearch={setSearch}/>
+                }
 
                 {/* Guild Information Container */}
                 {guild && (
@@ -140,7 +150,7 @@ const Users = () => {
                         width: '100%',
                     }}>
                     {
-                    
+                    users.at(page) !== undefined ?
                     users[page].map((userT, index) => {
                         if(userT.name?.startsWith(search))
                         {
@@ -149,7 +159,7 @@ const Users = () => {
                                     console.log(user);
                                     window.location.href = window.location.origin + `/guilds/${user?.id}/${id}/user/${userT.discordId}/`
                                 }} style={{
-                                    backgroundColor: '#182133',
+                                    backgroundColor: ThemeStyle.secondaryColor,
                                     // flex: '1 0 15px',
                                     borderRadius:'10px',
                                     // width: '100%',
@@ -174,9 +184,11 @@ const Users = () => {
                             )
                         }
                         })
+                        :
+                        <h1 style={{ fontSize: '35px' }}>No users had been found.</h1>
                     }
                     {
-                        users.length > 1
+                        users.length > 0
                         &&
                         <Pages page={page} setPage={setPage} maxPages={users.length}/>
                     }

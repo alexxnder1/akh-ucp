@@ -13,7 +13,7 @@ export const Buttons: React.CSSProperties = {
     cursor: 'pointer', backgroundColor: '#2950ff', borderRadius: '5px',paddingTop: '10px', paddingBottom:'10px', paddingLeft:'20px', paddingRight:'20px', color:'white', border:'none', fontSize: '20px'
 }
 
-export const OPTIONS: Array<string> = ['Coinflip','Coinflip','Coinflip','Coinflip','Coinflip','Coinflip','Coinflip'];
+export const OPTIONS: Array<string> = ['Coinflip'];
 
 const RenderOption = (props: any) => {
     switch(props.option.toLowerCase()) {
@@ -85,6 +85,8 @@ const User = () => {
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
+            transition: 'all 2s',
+
             // padding: '20px',
             boxSizing: 'border-box' 
         }}>
