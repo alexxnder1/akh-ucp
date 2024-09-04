@@ -1,6 +1,6 @@
 
 <h2>Control Panel useful for managing <a href='https://google.com'>Akh</a> Discord Bot.</h2>
-<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/ss.png'/>
+<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/ss.PNG'/>
 
 
 <h3>Authentication</h3> 
