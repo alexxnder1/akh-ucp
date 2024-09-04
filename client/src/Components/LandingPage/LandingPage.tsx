@@ -81,7 +81,7 @@ const LandingPage = () => {
             display: 'flex',
             gap: '200px',
             position: 'absolute',
-            paddingTop:'250px',
+            paddingTop:'220px',
             
             // background: 'rgb(0,48,82);'
             flex: 1,
