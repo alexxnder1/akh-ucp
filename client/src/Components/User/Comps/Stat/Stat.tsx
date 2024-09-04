@@ -20,7 +20,7 @@ const Stat = (props: StatProps) => {
 
     const editClick = () => {
         addNotification('Updated in database successfully', '#f77800')
-        axios.put(`https://localhost:3000/user/${props.user?.discordId}/`, props.user, {withCredentials:true}).then((res: AxiosResponse) => {
+        axios.put(`${process.env.REACT_APP_API_URL}/user/${props.user?.discordId}/`, props.user, {withCredentials:true}).then((res: AxiosResponse) => {
            
         }).catch(err => console.error(err))
     };

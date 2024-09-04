@@ -9,6 +9,7 @@ import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import Loading from "../Loading/Loading";
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import { ThemeStyle } from "../Theme";
+import { Blue, BluePrimary } from "../LandingPage/LandingPage";
 
 class Props {
     public guild: Guild | undefined;
@@ -36,7 +37,7 @@ const GuildLeftPanel = (props: Props) => {
     const [optionHover, setOptionHover] = useState<number>(-1);
     return (
         <div className="GuildInfo" style={{
-            backgroundColor: ThemeStyle.primaryColor,
+            backgroundColor: Blue,
             // opacity: 0.9,
             display: 'flex',
             position: 'fixed',
@@ -79,7 +80,7 @@ const GuildLeftPanel = (props: Props) => {
 
             
             <ArrowBackIcon onClick={(e) => {
-                window.location.href = 'https://localhost:3001/dashboard'
+                window.location.href = `${process.env.REACT_APP_FRONTEND_URL}/dashboard`;
                 //   props.setGuild(undefined)
                 }} style={{
                   width: "50px",

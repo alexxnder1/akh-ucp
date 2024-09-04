@@ -82,7 +82,7 @@ export const NotificationProvider:  React.FC<{ children: ReactNode }> = ({ child
                 {
                     notifications.map((notif, index) => {
                         return (
-                            <div                             className={styles.notification}
+                            <div className={styles.notification}
                             key={index} style={{
                                 backgroundColor: `${notif.color}`,
                                 borderRadius: '10px',

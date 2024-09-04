@@ -10,11 +10,11 @@ const Home = () => {
   const [inviteHover, setInviteHover] = useState<boolean>(false); 
   
   useEffect(() => {
-    axios.get('https://localhost:3000/api/user', { withCredentials: true } ).then((res: AxiosResponse) => {
-      window.location.href = 'https://localhost:3001/dashboard';
-            
+    axios.get(`${process.env.REACT_APP_API_URL}/api/user`, { withCredentials: true } ).then((res: AxiosResponse) => {
+      
+      // window.location.href = `${process.env.REACT_APP_FRONTEND_URL}/landing`;      
     }).catch(() => {
-      // window.location.href = 'https://localhost:3001/'
+      // window.location.href = 'process.env.REACT_APP_FRONTEND_URL'
     })
   }, []);
 
@@ -59,7 +59,7 @@ const Home = () => {
                 color: inviteHover ? 'white' : '#0081fa',
                 fontFamily: ''
               }}onClick={(e) => {
-                window.location.href = 'https://localhost:3000/auth/discord';
+                window.location.href = `${process.env.REACT_APP_API_URL}/auth/discord`;
               }}>Login</button>
         </div>
         </div>

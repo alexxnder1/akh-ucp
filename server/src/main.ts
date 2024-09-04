@@ -8,6 +8,8 @@ import path from 'path';
 import session from 'express-session';
 import passport from 'passport';
 import DiscordStrategy from 'passport-discord';
+import { FRONTEND_URL, API_URL } from '../settings.json';
+
 
 // import cookieParser from 'cookie-parser';
 // Load the certificate and key
@@ -18,17 +20,16 @@ const credentials = { key: privateKey, cert: certificate };
 // Environment variables (client ID, client secret, etc.)
 const CLIENT_ID = '937011056260313099';
 const CLIENT_SECRET = '30qbfLoDNQIXYXC52PIu2SlkeJyTyyuG';
-const CALLBACK_URL = 'https://localhost:3000/auth/discord/callback';
+const CALLBACK_URL = `${API_URL}/auth/discord/callback`;
 
 const app = express();
-const port = 3000;
 
 // Middleware to parse JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Configure CORS
 app.use(cors({
-    origin: 'https://localhost:3001', // Replace with your React app URL
+    origin: FRONTEND_URL, // Replace with your React app URL
     credentials: true
 }));
 
@@ -71,7 +72,7 @@ app.get('/auth/discord', passport.authenticate('discord'));
 app.get('/auth/discord/callback', passport.authenticate('discord', {
     failureRedirect: '/'
 }), (req, res) => {
-    res.redirect('https://localhost:3001/');
+    res.redirect(`${FRONTEND_URL}/dashboard`);
 })
 
 app.get('/api/user', (req, res) => {
@@ -111,7 +112,7 @@ app.get('/logout', (req, result, next) => {
         if(err)
             return next(err);
 
-        result.redirect('https://localhost:3001/');
+        result.redirect(`${FRONTEND_URL}`);
     });
 });
 
@@ -190,6 +191,6 @@ app.put('/user/:user_id', (req, res) => {
 // Create an HTTPS server
 const httpsServer = https.createServer(credentials, app);
 
-httpsServer.listen(3000, () => {
-  console.log('HTTPS Server running on https://localhost:3000');
+httpsServer.listen(4000, () => {
+  console.log(`HTTPS Server running on ${API_URL}`);
 });

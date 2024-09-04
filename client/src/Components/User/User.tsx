@@ -36,16 +36,16 @@ const User = () => {
     const [userOption, setUserOption] = useState<number>(0);
 
     useEffect(() => {
-        axios.get('https://localhost:3000/api/user', { withCredentials: true }).then((res: AxiosResponse) => {
+        axios.get(`${process.env.REACT_APP_API_URL}/api/user`, { withCredentials: true }).then((res: AxiosResponse) => {
             setAuth(res.data as UserAuth);
         }).catch(() => {
-            window.location.href = 'https://localhost:3001/';
+            window.location.href = 'process.env.REACT_APP_FRONTEND_URL';
         });
     }, []);
     
     useEffect(() => {
         if (auth !== undefined && owner_id !== undefined && index !== undefined) {
-            axios.get(`https://localhost:3000/guilds/${owner_id}`).then((res: AxiosResponse) => {
+            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${owner_id}`).then((res: AxiosResponse) => {
                 if (owner_id !== auth.id) throw new Error('Not found');
                 
                 const guilds = res.data as Array<Guild>;
@@ -58,18 +58,18 @@ const User = () => {
                     throw new Error('Not found');
                 }
             }).catch(() => {
-                // window.location.href = 'https://localhost:3001/404';
+                // window.location.href = 'process.env.REACT_APP_FRONTEND_URL404';
             });
         }
     }, [auth]);
     
     useEffect(() => {
         if (auth !== undefined && guild !== undefined) {
-            console.log(`https://localhost:3000/guilds/${guild.guildId}/user/${user_id}`)
-            axios.get(`https://localhost:3000/guilds/${guild.guildId}/user/${user_id}`).then((res: AxiosResponse) => {
+            console.log(`${process.env.REACT_APP_API_URL}/guilds/${guild.guildId}/user/${user_id}`)
+            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${guild.guildId}/user/${user_id}`).then((res: AxiosResponse) => {
                 setUser(res.data as UserDb);
             }).catch(() => {
-                window.location.href = 'https://localhost:3001/404';
+                window.location.href = `${process.env.REACT_APP_FRONTEND_URL}/404`;
             });
         }
     }, [guild]);

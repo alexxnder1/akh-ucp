@@ -18,12 +18,12 @@ const Top = () => {
 
     // safety reasons
     useEffect(() => {
-        axios.get('https://localhost:3000/api/user', { withCredentials: true }).then((res: AxiosResponse) => {
+        axios.get(`${process.env.REACT_APP_API_URL}/api/user`, { withCredentials: true }).then((res: AxiosResponse) => {
             setUser(res.data as UserAuth);
         }).catch(err => {
             setUser(undefined);
             console.error(err)
-            window.location.href = 'https://localhost:3001/';
+            window.location.href = 'process.env.REACT_APP_FRONTEND_URL';
         });
 
         document.title = 'Top';
@@ -35,26 +35,26 @@ const Top = () => {
 
         if(user !== undefined) {
             console.log(user.id);
-            axios.get(`https://localhost:3000/guilds/${user?.id}`, { withCredentials: true }).then((res:AxiosResponse) => {
+            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${user?.id}`, { withCredentials: true }).then((res:AxiosResponse) => {
                 setGuild((res.data as Array<Guild>).at(parseInt(id!)));
             }).catch(err => {
                 console.error(err);
                 setGuild(undefined);
             });
         }
-        // else window.location.href = 'https://localhost:3001/';
+        // else window.location.href = 'process.env.REACT_APP_FRONTEND_URL';
     }, [user]);
 
     useEffect(() => {
         if(guild !== undefined)
         {
-            axios.get(`https://localhost:3000/guilds/${guild?.guildId}/top`, {withCredentials: true}).then((res: AxiosResponse) => {
+            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${guild?.guildId}/top`, {withCredentials: true}).then((res: AxiosResponse) => {
                 setTop(res.data as Array<UserDb>)
             }).catch(err => {
                 console.error(err)
             });
         }
-        // else window.location.href = 'https://localhost:3001/';
+        // else window.location.href = 'process.env.REACT_APP_FRONTEND_URL';
         
     }, [guild]);
 

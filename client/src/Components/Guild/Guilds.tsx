@@ -78,7 +78,7 @@ const Guilds = (props: Props) => {
 
   useEffect(() => {
     if(props.user !== undefined) {
-      axios.get('https://localhost:3000/guilds/' + props.user.id).then((res: AxiosResponse) => {
+      axios.get(`${process.env.REACT_APP_API_URL}/guilds/` + props.user.id).then((res: AxiosResponse) => {
         setGuilds(res.data as unknown as Array<Guild>)
       })
     }
@@ -98,20 +98,10 @@ const Guilds = (props: Props) => {
             height: '100%',
             textAlign:"center",
           }}>
-            <div style={{
-              width: '100%',
-              color: 'white',
-              // backgroundColor: 'orange'
-            }}>
-              <h1 style={{
-                fontSize:'40px'
-              }}>Your Guilds:</h1>
+            <div style={{ width: '100%', color: 'white' }}>
+              <h1 style={{ fontSize:'30px'}}>Your Guilds:</h1>
             </div>
-            <div style={{
-               display: "flex",
-              //  gap: '120px',
-               flexDirection:'row',
-            }}>
+            <div style={{ display: "flex", flexDirection:'row'}}>
               {guilds === null
               ?
               <Loading/>
@@ -126,7 +116,7 @@ const Guilds = (props: Props) => {
                       color: guildHover === index ? 'green' : 'white'
   
                     }} onClick={(e) => {
-                      window.location.href = `https://localhost:3001/guilds/${props.user?.id}/${index}/overview`
+                      window.location.href = `${process.env.REACT_APP_FRONTEND_URL}/guilds/${props.user?.id}/${index}/overview`
                       // props.setGuild(index)
                     }}>
                       <img key={index} src={value.image} width={80} height={80} style={{

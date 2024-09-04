@@ -46,7 +46,7 @@ const DiscordUser = (props: Props) => {
                     fontSize: "15px",
                     
                 }} onClick={(e) => {
-                    window.location.href = 'https://localhost:3000/logout';
+                    window.location.href = `${process.env.REACT_APP_API_URL}/logout`;
                 }}>Logout</button>
                  }
  

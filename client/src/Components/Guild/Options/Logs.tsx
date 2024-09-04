@@ -60,10 +60,10 @@ const Logs = () => {
 
     useEffect(() => {
         document.title = `Logs`;
-        axios.get('https://localhost:3000/api/user', { withCredentials: true }).then((res: AxiosResponse) => {
+        axios.get(`${process.env.REACT_APP_API_URL}/api/user`, { withCredentials: true }).then((res: AxiosResponse) => {
             setUser(res.data as UserAuth);
         }).catch(() => {
-            window.location.href = 'https://localhost:3001/';
+            window.location.href = `${process.env.REACT_APP_FRONTEND_URL}`;
         });
         
         return () => { setLogs([]); setCopyLogs([]) }
@@ -81,7 +81,7 @@ const Logs = () => {
         if(owner_id !== user?.id || index === undefined)
             return;
             
-        axios.get(`https://localhost:3000/guilds/${owner_id}`, { withCredentials: true }).then((res: AxiosResponse) => {
+        axios.get(`${process.env.REACT_APP_API_URL}/guilds/${owner_id}`, { withCredentials: true }).then((res: AxiosResponse) => {
             var guilds=(res.data as Array<Guild>);
             // console.log(guilds);
             guilds.forEach(g => {
@@ -93,21 +93,21 @@ const Logs = () => {
             setGuild(guilds.at(parseInt(index!)))
             setGuilds(guilds)
         }).catch(() => {
-            // window.location.href = 'https://localhost:3001/404';
+            // window.location.href = 'process.env.REACT_APP_FRONTEND_URL404';
         });
     }, [user]);
 
     useEffect(() => {
         if (guild !== undefined) {
-            axios.get(`https://localhost:3000/logs/${guild.guildId}`).then((res: AxiosResponse) => {
+            axios.get(`${process.env.REACT_APP_API_URL}/logs/${guild.guildId}`).then((res: AxiosResponse) => {
                 var logs = GenerateLogPages(res.data as Array<Log>);
                 setLogs(logs);
                 setCopyLogs(logs);
             }).catch(() => {
-                // window.location.href = 'https://localhost:3001/404';
+                // window.location.href = 'process.env.REACT_APP_FRONTEND_URL404';
             });
         }
-        // else window.location.href = 'https://localhost:3001/404';
+        // else window.location.href = 'process.env.REACT_APP_FRONTEND_URL404';
 
     }, [guild]);
 

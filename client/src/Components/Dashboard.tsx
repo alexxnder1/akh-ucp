@@ -11,13 +11,12 @@ class Props {
 const Dashboard = (props: any)  => {
     const [user, setUser] = useState<UserAuth | null>(null);
     useEffect(() => {
-        axios.get('https://localhost:3000/api/user', { withCredentials: true } ).then((res: AxiosResponse) => {
+        axios.get(`${process.env.REACT_APP_API_URL}/api/user`, { withCredentials: true } ).then((res: AxiosResponse) => {
             setUser(res.data as UserAuth);
         }).catch((err) => {
-            console.log(err);
             setUser(null);
-            console.log('da');
-          window.location.href = 'https://localhost:3001/';
+            alert(process.env.REACT_APP_FRONTEND_URL);
+          window.location.href = `${process.env.REACT_APP_FRONTEND_URL}`;
         })
     }, []);
 
