@@ -3,6 +3,7 @@ import { UserAuth } from "../App";
 import axios, { AxiosResponse } from "axios";
 import DiscordUser from "./DiscordUser";
 import Guilds from "./Guild/Guilds";
+import Header from "./LandingPage/Header";
 
 class Props {
     public user: UserAuth | undefined;
@@ -25,13 +26,20 @@ const Dashboard = (props: any)  => {
 
     return (
         <div className='Dashboard' style={{
-            display: 'flex',
+            // display: 'flex',
             width: '100%',
-            // backgroundColor:'red',
-            position: 'relative'
+            // position: 'relative'
         }}>
-            <Guilds user={user}/> 
-            <DiscordUser user={user}/>
+            <Header user={user}/>
+            <div style={{
+                display:'flex',
+                justifyContent: 'center',
+                alignContent:'center',
+                // alignSelf:'center'
+            }}>
+                <Guilds user={user}/> 
+            </div>
+            {/* <DiscordUser user={user}/> */}
         </div>
     )
 }

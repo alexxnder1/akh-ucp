@@ -9,20 +9,18 @@ import session from 'express-session';
 import passport from 'passport';
 import DiscordStrategy from 'passport-discord';
 import { FRONTEND_URL, API_URL } from '../settings.json';
+// import './get/commands';
 
 
-// import cookieParser from 'cookie-parser';
-// Load the certificate and key
-const privateKey = fs.readFileSync(path.join(__dirname, 'key.pem'), 'utf8');
-const certificate = fs.readFileSync(path.join(__dirname, 'cert.pem'), 'utf8');
-const credentials = { key: privateKey, cert: certificate };
+ const privateKey = fs.readFileSync(path.join(__dirname, 'key.pem'), 'utf8');
+ const certificate = fs.readFileSync(path.join(__dirname, 'cert.pem'), 'utf8');
+ const credentials = { key: privateKey, cert: certificate };
 
-// Environment variables (client ID, client secret, etc.)
-const CLIENT_ID = '937011056260313099';
-const CLIENT_SECRET = '30qbfLoDNQIXYXC52PIu2SlkeJyTyyuG';
-const CALLBACK_URL = `${API_URL}/auth/discord/callback`;
+ const CLIENT_ID = '937011056260313099';
+ const CLIENT_SECRET = '30qbfLoDNQIXYXC52PIu2SlkeJyTyyuG';
+ const CALLBACK_URL = `${API_URL}/auth/discord/callback`;
 
-const app = express();
+export const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -187,7 +185,18 @@ app.put('/user/:user_id', (req, res) => {
 
 
 }); 
-
+app.get('/commands', (request, result) => {
+    database.query('select * from commands', (err, res) => {
+        if(err)
+        {
+            console.error(err);
+            result.sendStatus(404);
+            return;
+        }
+        
+        result.json(res);
+    })
+});
 // Create an HTTPS server
 const httpsServer = https.createServer(credentials, app);
 

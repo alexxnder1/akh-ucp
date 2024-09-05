@@ -199,8 +199,6 @@ const Logs = () => {
                     <Search tooltip="Start with '#' to search for log ids." search={search} setSearch={setSearch}/>
                     <InputList onChange={(val) => {
                         setCategory(val);                           
-        // applySearchIndex();
-// 
                     }} values={['chat', 'kick', 'ban']}/>
                 </div>
 

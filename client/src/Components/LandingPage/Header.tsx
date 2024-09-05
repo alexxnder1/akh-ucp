@@ -1,8 +1,11 @@
 import KeyboardCommandKeyIcon from '@mui/icons-material/KeyboardCommandKey';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BluePrimary } from "./LandingPage";
 import { UserAuth } from "../../App";
 import ProfileCard from "./ProfileCard";
+import { useLocation, useNavigate } from 'react-router-dom';
+import Loading from '../Loading/Loading';
+import LoadingBar from '../LoadingBar/LoadingBar';
 
 const ButtonStyle: React.CSSProperties = { 
     border: 'none',
@@ -20,8 +23,11 @@ interface Props {
 }
 
 const Header = (props: Props) => {
+    
     const [inviteHover, setInviteHover] = useState<number>(-1);
-    const [profileClick ,setProfileClick] = useState<boolean>(false);
+    const [profileClick, setProfileClick] = useState<boolean>(false);
+    
+
 
     return (
         <div className='Header' style={{
@@ -46,6 +52,7 @@ const Header = (props: Props) => {
                 justifyContent:'center',
                 gap: '700px',
                 flex:1,
+                color:'white',
                 alignItems:'center',
                 flexDirection:'row',
                 display:'flex',
@@ -86,6 +93,7 @@ const Header = (props: Props) => {
                     </div>
                 }
             </div>
+            <LoadingBar/>
         </div>
     )
 };

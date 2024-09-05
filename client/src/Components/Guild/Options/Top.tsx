@@ -61,7 +61,7 @@ const Top = () => {
     return (
         <div className="Top" style={{width: '100%', display:'flex', flexDirection:'row'}}>
             <GuildLeftPanel id={parseInt(id!)} guild={guild} user={user}/>
-            <div style={{ marginLeft:'40%', display:'flex', width:'100%' }}>
+            <div style={{ marginLeft:"300px", justifyContent:'center', display:'flex', width:'100%'}}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap:'10px',color: 'white'}}>
                     {top.length>0 && <h1>Top</h1>}
                     { top.length > 0 ?
@@ -71,14 +71,14 @@ const Top = () => {
                                     window.location.href = window.location.origin + `/guilds/${user?.id}/${id}/user/${u.discordId}/`
                                 }} style={{ 
                                     backgroundColor: hover===index ? 'white': '#18223d', justifyContent:'space-between',
-                                    color: index===hover ? '#18223d' : 'white',width:'550px', display: 'flex', 
+                                    color: index===hover ? '#18223d' : 'white',width:'950px', display: 'flex', 
                                     flexDirection:'row',alignItems:'center', gap: '10px',
-                                    padding: '10px'
+                                    padding: '10px',
                                 }}>
                                    
-                                    <img src={u.avatar} style={{ width: '50px', height: '50px' }}></img>
-                                    <h1 style={{ fontSize:'16px' }}>{u.name}</h1>
-                                    <h1 style={{ fontSize:'15px' }}>{u.coins} coins</h1>
+                                    <img src={u.avatar} style={{ width: '70px', height: '70px' }}></img>
+                                    <h1 style={{ fontSize:'20px' }}>{u.name}</h1>
+                                    <h1 style={{ fontSize:'18px' }}>{u.coins} coins</h1>
                                 </div>      
                             )
                         })

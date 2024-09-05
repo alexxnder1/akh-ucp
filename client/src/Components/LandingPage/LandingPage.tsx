@@ -19,7 +19,7 @@ const TextStyle: React.CSSProperties = {
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
-    textShadow: `#002259 5px 5px`,
+    textShadow: `#002259 0px 0px 10px`,
 };
 
 
@@ -30,6 +30,7 @@ const TagStyle: React.CSSProperties = {
     gap: '15px',
     color: 'rgba(255,255,255, 0.95)',
     marginLeft: '10px',
+    paddingRight: '10px', 
     padding: '5px',
     borderRadius: '10px',
     backgroundColor: '#7289da',
@@ -102,7 +103,7 @@ const LandingPage = () => {
                 <div style={{ ...TextStyle, marginBottom: '-80px' }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         <h1>The most </h1>
-                        <h1 style={{ ...TagStyle, boxShadow: `5px 5px 55px ${DiscordColor}`, backgroundColor: DiscordColor }}>powerful <BoltIcon style={{ width: '50px', height: '50px' }} /></h1>
+                        <h1 style={{ ...TagStyle, boxShadow: `5px 5px 55px ${DiscordColor}`, paddingLeft:'20px', backgroundColor: DiscordColor }}>powerful <BoltIcon style={{ width: '50px', height: '50px' }} /></h1>
                         <h1>Discord Bot.</h1>
                     </div>
 

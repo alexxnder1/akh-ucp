@@ -5,6 +5,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 // import GuildLeftPanel from "./GuildLeftPanel";
 import { UserAuth } from "../../App";
 import Loading from "../Loading/Loading";
+import Search from "../Search";
 
 export class Channel {
   public name: string; 
@@ -75,6 +76,7 @@ const Guilds = (props: Props) => {
  
   const [guilds, setGuilds] = useState<Array<Guild> | null>(null);
   const [users, setUsers] = useState<Array<UserDb>>([]);
+  const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
     if(props.user !== undefined) {
@@ -92,14 +94,17 @@ const Guilds = (props: Props) => {
             alignItems: 'center',
             justifyContent: 'center',
             // alignSelf:'center',
+            marginTop:'120px',
             fontSize: "8px",
-            gap: '20px',
+            gap: '60px',
             width: '100%',
             height: '100%',
             textAlign:"center",
           }}>
             <div style={{ width: '100%', color: 'white' }}>
-              <h1 style={{ fontSize:'30px'}}>Your Guilds:</h1>
+              <h1 style={{ fontSize:'30px'}}>Guilds</h1>
+              <h1 style={{ fontSize:'18px'}}>Select the guild you want to configure it</h1>
+              <Search style={{ width: '650px' }} search={search} setSearch={setSearch}/>
             </div>
             <div style={{ display: "flex", flexDirection:'row'}}>
               {guilds === null
@@ -108,6 +113,7 @@ const Guilds = (props: Props) => {
               :
               guilds?.length > 0
                 ? guilds.map((value: Guild, index: number) => {
+                  if(value.name?.toLowerCase().startsWith(search.toLowerCase()))
                   return (
                     <div key={index} onMouseEnter={() => setGuildHover(index)} onMouseLeave={() => setGuildHover(-1)} style={{
                       ...GuildStyle,
