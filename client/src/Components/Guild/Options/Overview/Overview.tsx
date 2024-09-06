@@ -1,19 +1,20 @@
+import PeopleIcon from '@mui/icons-material/People';
+
 import { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
-import PeopleIcon from '@mui/icons-material/People';
-import { UserAuth } from '../../../App';
-import GuildLeftPanel from '../GuildLeftPanel';
-import { Guild, UserDb } from '../Guilds';
+import { UserAuth } from '../../../../App';
+import GuildLeftPanel from '../../GuildLeftPanel';
+import { Guild, UserDb } from '../../Guilds';
+import Chart from "react-apexcharts";
+import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+import { GetDateByTimestamp } from '../../../../Utils/Date';
+import { Blue, BluePrimary } from '../../../LandingPage/LandingPage';
+import { ChartDiv } from './Chart';
 
-const ChartStyle: React.CSSProperties = {
-    backgroundColor: "orange",
-    padding: "20px",
-    borderRadius: "10px",
-    display: "flex",
-    fontSize: "12px",
-    alignItems: "center",
-    height: "20px"
+interface UserChart {
+    players: number;
+    date: string;
 }
 
 const Overview = () => {
@@ -21,6 +22,7 @@ const Overview = () => {
     const [guild, setGuild] = useState<Guild | undefined>(undefined);
     const [user, setUser] = useState<UserAuth | undefined>(undefined);
     const [users, setUsers] = useState<Array<UserDb>>([]);
+    const [data, setData] = useState<Array<UserChart>>([]);
 
     useEffect(() => {
         document.title = `Overview`;
@@ -50,6 +52,25 @@ const Overview = () => {
     }, [user, owner_id, index]);
 
     useEffect(() => {
+        if(guild) {
+            axios.get(`${process.env.REACT_APP_API_URL}/${guild?.guildId}/charts`, { withCredentials: true }).then((res: AxiosResponse) => {
+                // console.log(res.data);
+                var data: Array<UserChart> = []
+                for(let i = 0; i < res.data.length; i++)
+                {
+                    data.push( { players: JSON.parse(res.data.at(i).names).length, date:GetDateByTimestamp(res.data.at(i).date) })
+                    // console.log(res.data.at(i).date);
+                }
+                setData(data)
+    
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+    }, [guild]);
+
+    
+    useEffect(() => {
         if (guild !== undefined) {
             axios.get(`${process.env.REACT_APP_API_URL}/users/${guild.guildId}`).then((res: AxiosResponse) => {
                 setUsers(res.data as Array<UserDb>);
@@ -74,49 +95,38 @@ const Overview = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'flex-start',
-                marginLeft: "300px",
-
+                marginLeft: "350px",
                 padding: '50px',
             }}>
                 {/* Heading Container */}
                 <div style={{
                     width: '100%',  
                     marginBottom: '20px', 
-
                     display: 'flex',
                     // flexDirection: 'flex-start'
                 }}>
-                    <h1 style={{ margin: 0 }}>Overview</h1>  
+                    <h1 style={{ margin: 0 }}>Overview</h1> 
                 </div>
+                
+                <h1 style={{fontSize:'20px', marginTop: '-10px', marginBottom:'30px'}}>Join Date: {guild?.joinDate}</h1> 
 
                 {/* Guild Information Container */}
                 {guild && (
                     <div style={{
                         display: 'flex',
                         flexDirection: 'row',
-                        gap: '40px',  
+                        gap: '20px',  
                         flexWrap: 'wrap', 
                         width: '100%'
                     }}>
-                        <div style={{ fontSize: "10px", textAlign: "left" }}>
-                            <h1>Guild Members</h1>
-                            <div id="users" style={{ ...ChartStyle, backgroundColor: 'orange' }}>
-                                <PeopleIcon style={{ width: "30px", height: "30px", marginRight: "10px" }} />
-                                <h1>{users.length}</h1>
-                            </div>
-                        </div>
-                        <div style={{ fontSize: "10px", textAlign: "left" }}>
-                            <h1>Join Date</h1>
-                            <div id="users" style={{ ...ChartStyle, backgroundColor: 'brown' }}>
-                                <PeopleIcon style={{ width: "30px", height: "30px", marginRight: "10px" }} />
-                                <h1>{guild?.joinDate}</h1>
-                            </div>
-                        </div>
+                        <ChartDiv data={data} keyX={'players'} header={'Members'} icon={<PeopleIcon style={{width: '50px', height: '30px'}}/>} value={`${users.length}`} keyY={'date'}/>
                     </div>
                 )}
+                
             </div>
         </div>
     );
 };
+
 
 export default Overview;

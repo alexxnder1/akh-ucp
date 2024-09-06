@@ -197,6 +197,22 @@ app.get('/commands', (request, result) => {
         result.json(res);
     })
 });
+app.get('/:guild_id/charts', (request, result) => {
+    if(request.isAuthenticated())
+    {
+        database.query('select * from user_charts where guildId=?', [request.params['guild_id']], (err, res) => {
+            if(err)
+            {
+                console.error(err);
+                result.sendStatus(404);
+                return;
+            }
+            
+            result.json(res);
+        })
+    }
+    else result.sendStatus(404);
+});
 // Create an HTTPS server
 const httpsServer = https.createServer(credentials, app);
 

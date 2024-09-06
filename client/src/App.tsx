@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import axios, { AxiosResponse } from 'axios';
 import Home from './Components/Home';
-import Overview from './Components/Guild/Options/Overview';
+import Overview from './Components/Guild/Options/Overview/Overview';
 import { BrowserRouter as Router, Route, Routes, useParams, Navigate } from 'react-router-dom';
 import Dashboard from './Components/Dashboard';
 import ErrorNotFound from './Components/ErrorNotFound';
