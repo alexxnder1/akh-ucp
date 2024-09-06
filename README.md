@@ -1,15 +1,10 @@
 
 <h2>Control Panel useful for managing <a href='https://google.com'>Akh</a> Discord Bot.</h2>
-<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/ss.PNG'/>
+<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/gif1.gif'/>
 
+<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/gif2.gif'/>
 
-<h3>Authentication</h3> 
-<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/login.gif'/>
-
-<hr/>
-
-<h3>Managing</h3> 
-<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/others.gif'/>
+<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/gif3.gif'/>
 
 <br/>
 <br/>
@@ -21,4 +16,5 @@
 <p>Passport</p>
 <p>MySQL</p>
 <p>React</p>
+<p>Recharts</p>
 
