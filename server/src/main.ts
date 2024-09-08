@@ -9,16 +9,14 @@ import session from 'express-session';
 import passport from 'passport';
 import DiscordStrategy from 'passport-discord';
 import { FRONTEND_URL, API_URL } from '../settings.json';
-// import './get/commands';
 
 
- const privateKey = fs.readFileSync(path.join(__dirname, 'key.pem'), 'utf8');
- const certificate = fs.readFileSync(path.join(__dirname, 'cert.pem'), 'utf8');
- const credentials = { key: privateKey, cert: certificate };
-
- const CLIENT_ID = '937011056260313099';
- const CLIENT_SECRET = '30qbfLoDNQIXYXC52PIu2SlkeJyTyyuG';
- const CALLBACK_URL = `${API_URL}/auth/discord/callback`;
+const privateKey = fs.readFileSync(path.join(__dirname, 'key.pem'), 'utf8');
+const certificate = fs.readFileSync(path.join(__dirname, 'cert.pem'), 'utf8');
+const credentials = { key: privateKey, cert: certificate };
+const CLIENT_ID = '937011056260313099';
+const CLIENT_SECRET = '30qbfLoDNQIXYXC52PIu2SlkeJyTyyuG';
+const CALLBACK_URL = `${API_URL}/auth/discord/callback`;
 
 export const app = express();
 
@@ -65,154 +63,9 @@ app.use(passport.session());
 
 Connect();
 
-app.get('/auth/discord', passport.authenticate('discord'));
+import './gets/guilds';
+import './gets/users';
 
-app.get('/auth/discord/callback', passport.authenticate('discord', {
-    failureRedirect: '/'
-}), (req, res) => {
-    res.redirect(`${FRONTEND_URL}/dashboard`);
-})
-
-app.get('/api/user', (req, res) => {
-  if(req.isAuthenticated())
-    res.json(req.user);
-    
-  else {
-      res.redirect('/auth/discord');    
-    // res.status(401).json({ message: 'Not authenticated'});
-}    
-});
-
-app.get('/profile', (req, res) => {
-    if(req.isAuthenticated()) {
-        res.json(req.user);
-    } else {
-        res.redirect('/auth/discord');
-    }
-})
-
-app.get('/guilds/:owner_id', (req, result) => {
-    database.query('select * from guilds where ownerId=?', [req.params.owner_id], (err, res) => {
-        if(err)
-        {
-            console.error(err);
-            return;
-        }
-
-        result.json(res);
-    });
-});
-
-
-
-app.get('/logout', (req, result, next) => {
-    req.logout((err) => {
-        if(err)
-            return next(err);
-
-        result.redirect(`${FRONTEND_URL}`);
-    });
-});
-
-app.get('/users/:guild_id', (req, result) => {
-    database.query('select * from users where guildId=?', [req.params['guild_id']], (err, res) => {
-        if(err)
-        {
-            console.error(err);
-            return;
-        }
-        
-        result.json(res);
-    }); 
-});
-
-
-app.get('/guilds/:guild_id/user/:user_id', (req, result) => {
-    database.query('select * from users where guildId=? and discordId=?', [req.params['guild_id'], req.params['user_id']], (err, res) => {
-        if(err)
-        {
-            console.error(err);
-            return;
-        }
-
-        result.json(res[0]);
-    }); 
-});
-
-app.get('/guilds/:guild_id/top', (req, result) => {
-    database.query('select * from users where guildId=? and coins > 0 order by coins DESC', [req.params['guild_id']], (err, res) =>{
-        if(err)
-        {
-            console.error(err);
-            return;
-        }
-        result.json(res);
-    });
-});
-
-app.get('/logs/:guild_id', (req, result) => {
-    database.query('select * from logs where guildId=?', [req.params['guild_id']], (err, res) => {
-        if(err)
-        {
-            console.error(err);
-            return;
-        }
-
-        result.json(res);
-    });
-});
-
-app.put('/user/:user_id', (req, res) => {
-    if(!req.isAuthenticated())
-    {
-        console.log(req.isAuthenticated());
-        res.send(req.authInfo);
-        console.log('You are not logged.');
-    }
-    else {
-        var body = {...req.body};
-        delete body.id;
-
-        database.query('update users set ? where discordId=?', [body, req.params['user_id']], (err, res) => {
-            if(err)
-            {
-                console.error(err);
-                return;
-            }
-        })
-        console.log(req.body);
-    }
-
-
-}); 
-app.get('/commands', (request, result) => {
-    database.query('select * from commands', (err, res) => {
-        if(err)
-        {
-            console.error(err);
-            result.sendStatus(404);
-            return;
-        }
-        
-        result.json(res);
-    })
-});
-app.get('/:guild_id/charts', (request, result) => {
-    if(request.isAuthenticated())
-    {
-        database.query('select * from user_charts where guildId=?', [request.params['guild_id']], (err, res) => {
-            if(err)
-            {
-                console.error(err);
-                result.sendStatus(404);
-                return;
-            }
-            
-            result.json(res);
-        })
-    }
-    else result.sendStatus(404);
-});
 // Create an HTTPS server
 const httpsServer = https.createServer(credentials, app);
 
