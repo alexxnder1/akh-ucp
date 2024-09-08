@@ -1,5 +1,7 @@
 import database from "../database";
-import { app } from "../main";
+import express, { Router } from 'express';
+
+const app: Router = express.Router();
 
 app.put('/user/:user_id', (req, res) => {
     if(!req.isAuthenticated())

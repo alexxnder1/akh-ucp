@@ -1,6 +1,9 @@
+import express, { Router } from "express";
 import database from "../database";
-import { app } from "../main";
+// import { app } from "../main";
 
+
+const app: Router = express.Router();
 
 app.get('/guilds/:guild_id/user/:user_id', (req, result) => {
     if(req.isAuthenticated())
@@ -15,7 +18,6 @@ app.get('/guilds/:guild_id/user/:user_id', (req, result) => {
             result.json(res[0]);
         }); 
     }
-    else result.sendStatus(403);
 });
 
 app.get('/guilds/:guild_id/top', (req, result) => {
@@ -30,7 +32,6 @@ app.get('/guilds/:guild_id/top', (req, result) => {
             result.json(res);
         });
     }
-    else result.sendStatus(403);
 });
 
 app.get('/logs/:guild_id', (req, result) => {
@@ -46,7 +47,6 @@ app.get('/logs/:guild_id', (req, result) => {
             result.json(res);
         });
     }
-    else result.sendStatus(403);
 });
 
 app.get('/commands', (request, result) => {
@@ -63,7 +63,6 @@ app.get('/commands', (request, result) => {
             result.json(res);
         })
     }
-    else result.sendStatus(403);
 });
 
 app.get('/:guild_id/charts', (request, result) => {
@@ -80,7 +79,6 @@ app.get('/:guild_id/charts', (request, result) => {
             result.json(res);
         })
     }
-    else result.sendStatus(403);
 });
 
 app.get('/guilds/:owner_id', (req, result) => {
@@ -95,5 +93,4 @@ app.get('/guilds/:owner_id', (req, result) => {
             result.json(res);
         });
     }
-    else result.sendStatus(403);
 });

@@ -18,7 +18,7 @@ const CLIENT_ID = '937011056260313099';
 const CLIENT_SECRET = '30qbfLoDNQIXYXC52PIu2SlkeJyTyyuG';
 const CALLBACK_URL = `${API_URL}/auth/discord/callback`;
 
-export const app = express();
+const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -63,9 +63,9 @@ app.use(passport.session());
 
 Connect();
 
+
 import './gets/guilds';
 import './gets/users';
-
 // Create an HTTPS server
 const httpsServer = https.createServer(credentials, app);
 

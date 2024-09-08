@@ -1,7 +1,10 @@
-import { app } from "../main";
+
 import { FRONTEND_URL } from '../../settings.json';
 import passport from "passport";
 import database from "../database";
+
+import express, { Router } from "express";
+const app: Router = express.Router();
 
 app.get('/logout', (req, result, next) => {
     if(req.isAuthenticated())
@@ -13,7 +16,6 @@ app.get('/logout', (req, result, next) => {
             result.redirect(`${FRONTEND_URL}`);
         });
     }
-    else result.sendStatus(403);
 });
 
 
@@ -31,7 +33,6 @@ app.get('/api/user', (req, res) => {
     
   else {
       res.redirect('/auth/discord');    
-      res.sendStatus(403);
     }    
 });
 
@@ -40,7 +41,6 @@ app.get('/profile', (req, res) => {
         res.json(req.user);
     } else {
         res.redirect('/auth/discord');
-        res.sendStatus(403);
     }
 })
 
@@ -57,5 +57,4 @@ app.get('/users/:guild_id', (req, result) => {
             console.log(`[GET] Loaded users for guild ${req.params['guild_id']}`);
         }); 
     }
-    else result.sendStatus(403);
 });
