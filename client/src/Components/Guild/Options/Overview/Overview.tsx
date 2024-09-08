@@ -6,8 +6,6 @@ import { useParams } from 'react-router-dom';
 import { UserAuth } from '../../../../App';
 import GuildLeftPanel from '../../GuildLeftPanel';
 import { Guild, UserDb } from '../../Guilds';
-import Chart from "react-apexcharts";
-import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { GetDateByTimestamp } from '../../../../Utils/Date';
 import { Blue, BluePrimary } from '../../../LandingPage/LandingPage';
 import { ChartDiv } from './Chart';

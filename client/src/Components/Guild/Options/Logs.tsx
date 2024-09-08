@@ -27,7 +27,7 @@ export const Border: React.CSSProperties = {
     // width: '100%'
 }
 export const ContentBorder: React.CSSProperties = {
-    border: 'white 1px double',
+    border: 'grey 1px solid',
     padding: '10px',
     // opacity: 0.7
     
@@ -71,6 +71,8 @@ const Logs = () => {
 
     useEffect(() => {
         setLogs(GenerateLogPages());
+        return () => { setLogs([]); setCopyLogs([]) }
+
     }, [search, category]);
     
 

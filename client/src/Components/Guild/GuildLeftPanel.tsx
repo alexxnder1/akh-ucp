@@ -1,3 +1,4 @@
+import TuneIcon from '@mui/icons-material/Tune';
 import { useEffect, useState } from "react";
 import { Guild } from "./Guilds";
 import BarChartIcon from '@mui/icons-material/BarChart';
@@ -31,7 +32,8 @@ const GuildLeftPanel = (props: Props) => {
         new Option('Overview', <BarChartIcon/>),
         new Option('Users', <PeopleAltIcon/>),
         new Option('Logs', <StickyNote2Icon/> ),
-        new Option('Top', <MilitaryTechIcon/> )
+        new Option('Top', <MilitaryTechIcon/> ),
+        new Option('Settings', <TuneIcon/> ),
 
     ]);
     const [optionHover, setOptionHover] = useState<number>(-1);
@@ -130,6 +132,12 @@ const GuildLeftPanel = (props: Props) => {
                                          {
                                             // guilds/:owner_id/:index/top
                                              window.location.href = `${window.location.origin}/guilds/${props.user?.id}/${props.id}/top`;
+                                             break;
+                                         }
+                                         case 'settings':
+                                         {
+                                            // guilds/:owner_id/:index/top
+                                             window.location.href = `${window.location.origin}/guilds/${props.user?.id}/${props.id}/settings`;
                                              break;
                                          }
                                 }

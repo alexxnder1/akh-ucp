@@ -13,6 +13,7 @@ import { NotificationProvider } from './Components/Notification/Notification';
 import Top from './Components/Guild/Options/Top';
 import LandingPage from './Components/LandingPage/LandingPage';
 import Commands from './Components/Commands/Commands';
+import Settings from './Components/Guild/Options/Settings';
 
 export class UserAuth {
   public username: string | undefined;
@@ -57,6 +58,8 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/login' element={<Home/>}/>
           <Route path='/commands' element={<Commands/>}/>
+
+          <Route path='/guilds/:owner_id/:index/settings' element={<Settings/>}/>
           <Route path='/guilds/:owner_id/:index/overview' element={<Overview/>}/>
           <Route path='/guilds/:owner_id/:index/users' element={<Users/>}/>
           <Route path='/guilds/:owner_id/:index/logs' element={<Logs/>}/>
