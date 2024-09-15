@@ -2,10 +2,9 @@ import express, { Router } from "express";
 import database from "../database";
 // import { app } from "../main";
 
+const router: Router = express.Router();
 
-const app: Router = express.Router();
-
-app.get('/guilds/:guild_id/user/:user_id', (req, result) => {
+router.get('/:guild_id/user/:user_id', (req, result) => {
     if(req.isAuthenticated())
     {
         database.query('select * from users where guildId=? and discordId=?', [req.params['guild_id'], req.params['user_id']], (err, res) => {
@@ -20,10 +19,10 @@ app.get('/guilds/:guild_id/user/:user_id', (req, result) => {
     }
 });
 
-app.get('/guilds/:guild_id/top', (req, result) => {
+router.get('/:guild_id/top', (req, result) => {
     if(req.isAuthenticated())
     {
-        database.query('select * from users where guildId=? and coins > 0 order by coins DESC', [req.params['guild_id']], (err, res) =>{
+        database.query('select * from users where guildId=? order by coins DESC', [req.params['guild_id']], (err, res) =>{
             if(err)
             {
                 console.error(err);
@@ -34,38 +33,21 @@ app.get('/guilds/:guild_id/top', (req, result) => {
     }
 });
 
-app.get('/logs/:guild_id', (req, result) => {
+router.get('/:guild_id/logs', (req, result) => {
     if(req.isAuthenticated())
     {
         database.query('select * from logs where guildId=?', [req.params['guild_id']], (err, res) => {
+            console.log(res)
             if(err)
             {
                 console.error(err);
                 return;
             }
-    
             result.json(res);
         });
     }
 });
-
-app.get('/commands', (request, result) => {
-    if(request.isAuthenticated())
-    {
-        database.query('select * from commands', (err, res) => {
-            if(err)
-            {
-                console.error(err);
-                result.sendStatus(404);
-                return;
-            }
-            
-            result.json(res);
-        })
-    }
-});
-
-app.get('/:guild_id/charts', (request, result) => {
+router.get('/:guild_id/charts', (request, result) => {
     if(request.isAuthenticated())
     {
         database.query('select * from user_charts where guildId=?', [request.params['guild_id']], (err, res) => {
@@ -81,7 +63,7 @@ app.get('/:guild_id/charts', (request, result) => {
     }
 });
 
-app.get('/guilds/:owner_id', (req, result) => {
+router.get('/:owner_id', (req, result) => {
     if(req.isAuthenticated()) {
         database.query('select * from guilds where ownerId=?', [req.params.owner_id], (err, res) => {
             if(err)
@@ -94,3 +76,5 @@ app.get('/guilds/:owner_id', (req, result) => {
         });
     }
 });
+
+export default router;

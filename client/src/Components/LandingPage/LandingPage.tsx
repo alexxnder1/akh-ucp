@@ -154,7 +154,7 @@ const LandingPage = () => {
                                 gap: '100px'
                             }}>
                                 {
-                                    index %2 === 0
+                                    index % 2 === 0
                                     &&
                                     <img src={`${feature.iconURL}`}/>
                                 }

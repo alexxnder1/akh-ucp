@@ -80,7 +80,7 @@ const Guilds = (props: Props) => {
 
   useEffect(() => {
     if(props.user !== undefined) {
-      axios.get(`${process.env.REACT_APP_API_URL}/guilds/` + props.user.id).then((res: AxiosResponse) => {
+      axios.get(`${process.env.REACT_APP_API_URL}/guilds/` + props.user.id, { withCredentials: true }).then((res: AxiosResponse) => {
         setGuilds(res.data as unknown as Array<Guild>)
       })
     }

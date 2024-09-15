@@ -77,7 +77,7 @@ const Header = (props: Props) => {
                         color: !(inviteHover === 1) ? 'white' : BluePrimary
                     }}
                     onClick={() => {
-                        window.location.href = `${process.env.REACT_APP_API_URL}/auth/discord`;
+                        window.location.href = `${process.env.REACT_APP_API_URL}/user/auth/discord`;
                     }}>
                     Login
                     </button>

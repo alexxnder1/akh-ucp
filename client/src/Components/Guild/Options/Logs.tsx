@@ -101,7 +101,7 @@ const Logs = () => {
 
     useEffect(() => {
         if (guild !== undefined) {
-            axios.get(`${process.env.REACT_APP_API_URL}/logs/${guild.guildId}`).then((res: AxiosResponse) => {
+            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${guild.guildId}/logs`, {withCredentials:true}).then((res: AxiosResponse) => {
                 var logs = GenerateLogPages(res.data as Array<Log>);
                 setLogs(logs);
                 setCopyLogs(logs);

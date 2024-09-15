@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import database, { Connect } from './database';
-
+// import callbackRoute 
 import fs from 'fs';
 import https from 'https';
 import path from 'path';
@@ -10,15 +10,18 @@ import passport from 'passport';
 import DiscordStrategy from 'passport-discord';
 import { FRONTEND_URL, API_URL } from '../settings.json';
 
+import usersRoutes from './routes/users';
+import guildsRoutes from './routes/guilds';
+import userRoutes from './routes/user';
 
 const privateKey = fs.readFileSync(path.join(__dirname, 'key.pem'), 'utf8');
 const certificate = fs.readFileSync(path.join(__dirname, 'cert.pem'), 'utf8');
 const credentials = { key: privateKey, cert: certificate };
 const CLIENT_ID = '937011056260313099';
 const CLIENT_SECRET = '30qbfLoDNQIXYXC52PIu2SlkeJyTyyuG';
-const CALLBACK_URL = `${API_URL}/auth/discord/callback`;
+const CALLBACK_URL = `${API_URL}/user/auth/discord/callback`;
 
-const app = express();
+export const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -61,11 +64,34 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 Connect();
 
+app.get('/commands', (request, result) => {
+    if(request.isAuthenticated())
+    {
+        database.query('select * from commands', (err, res) => {
+            if(err)
+            {
+                console.error(err);
+                result.sendStatus(404);
+                return;
+            }
+            
+            result.json(res);
+        })
+    }
+});
 
-import './gets/guilds';
-import './gets/users';
+app.get('/api/user', (req, res) => {
+    if(!req.isAuthenticated())
+        res.redirect('/user/auth/discord');
+        
+    else res.json(req.user);
+});
+
+import'./routes/index';
+
 // Create an HTTPS server
 const httpsServer = https.createServer(credentials, app);
 

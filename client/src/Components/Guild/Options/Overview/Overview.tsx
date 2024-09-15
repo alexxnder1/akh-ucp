@@ -34,7 +34,8 @@ const Overview = () => {
 
     useEffect(() => {
         if (user !== undefined && owner_id !== undefined && index !== undefined) {
-            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${owner_id}`).then((res: AxiosResponse) => {
+            console.log(`${process.env.REACT_APP_API_URL}/guilds/${owner_id}`)
+            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${owner_id}`, {withCredentials:true}).then((res: AxiosResponse) => {
                 if (owner_id !== user.id) throw new Error('Not found');
                 
                 const guilds = res.data as Array<Guild>;
@@ -51,7 +52,7 @@ const Overview = () => {
 
     useEffect(() => {
         if(guild) {
-            axios.get(`${process.env.REACT_APP_API_URL}/${guild?.guildId}/charts`, { withCredentials: true }).then((res: AxiosResponse) => {
+            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${guild?.guildId}/charts`, { withCredentials: true }).then((res: AxiosResponse) => {
                 // console.log(res.data);
                 var data: Array<UserChart> = []
                 for(let i = 0; i < res.data.length; i++)
@@ -70,7 +71,7 @@ const Overview = () => {
     
     useEffect(() => {
         if (guild !== undefined) {
-            axios.get(`${process.env.REACT_APP_API_URL}/users/${guild.guildId}`).then((res: AxiosResponse) => {
+            axios.get(`${process.env.REACT_APP_API_URL}/users/${guild.guildId}`, {withCredentials:true}).then((res: AxiosResponse) => {
                 setUsers(res.data as Array<UserDb>);
             }).catch(() => {
                 window.location.href = `${process.env.REACT_APP_FRONTEND_URL}/404`;

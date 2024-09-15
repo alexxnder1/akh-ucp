@@ -12,6 +12,7 @@ class Props {
 const Dashboard = (props: any)  => {
     const [user, setUser] = useState<UserAuth | null>(null);
     useEffect(() => {
+        console.log(`${process.env.REACT_APP_API_URL}/api/user`);
         axios.get(`${process.env.REACT_APP_API_URL}/api/user`, { withCredentials: true } ).then((res: AxiosResponse) => {
             setUser(res.data as UserAuth);
         }).catch((err) => {

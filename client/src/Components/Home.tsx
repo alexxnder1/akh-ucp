@@ -59,7 +59,7 @@ const Home = () => {
                 color: inviteHover ? 'white' : '#0081fa',
                 fontFamily: ''
               }}onClick={(e) => {
-                window.location.href = `${process.env.REACT_APP_API_URL}/auth/discord`;
+                window.location.href = `${process.env.REACT_APP_API_URL}/user/auth/discord`;
               }}>Login</button>
         </div>
         </div>

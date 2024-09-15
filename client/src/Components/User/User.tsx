@@ -45,7 +45,7 @@ const User = () => {
     
     useEffect(() => {
         if (auth !== undefined && owner_id !== undefined && index !== undefined) {
-            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${owner_id}`).then((res: AxiosResponse) => {
+            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${owner_id}`, {withCredentials:true}).then((res: AxiosResponse) => {
                 if (owner_id !== auth.id) throw new Error('Not found');
                 
                 const guilds = res.data as Array<Guild>;
@@ -65,9 +65,9 @@ const User = () => {
     
     useEffect(() => {
         if (auth !== undefined && guild !== undefined) {
-            console.log(`${process.env.REACT_APP_API_URL}/guilds/${guild.guildId}/user/${user_id}`)
-            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${guild.guildId}/user/${user_id}`).then((res: AxiosResponse) => {
+            axios.get(`${process.env.REACT_APP_API_URL}/guilds/${guild.guildId}/user/${user_id}`, {withCredentials:true}).then((res: AxiosResponse) => {
                 setUser(res.data as UserDb);
+                console.log(res.data)
             }).catch(() => {
                 window.location.href = `${process.env.REACT_APP_FRONTEND_URL}/404`;
             });
