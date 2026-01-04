@@ -1,20 +1,22 @@
- <h1>🚧🚧 W.I.P. 🚧🚧</h1>
-<h2>Control Panel useful for managing <a href='https://google.com'>Akh</a> Discord Bot.</h2>
-<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/gif1.gif'/>
+# Akh UCP — User Control Panel
 
-<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/gif2.gif'/>
+A web-based **control panel** for managing the [Akh Discord Bot](https://github.com/alexxnder1/akh).  
+Currently a work in progress (W.I.P.), the panel aims to provide an intuitive interface to monitor, configure, and manage your bot directly from the browser.
 
-<img src='https://github.com/alexxnder1/akh-panel/blob/main/github-resources/gif3.gif'/>
 
-<br/>
-<br/>
-<br/>
+## 🛠️ Libraries & Technologies Used
 
-<h2>Libraries used: </h2>
-<p>React</p>
-<p>Axios</p>
-<p>Passport</p>
-<p>MySQL</p>
-<p>React</p>
-<p>Recharts</p>
+- **React** — Frontend UI library  
+- **Axios** — HTTP client for API requests  
+- **Passport** — Authentication middleware  
+- **MySQL** — Database for storing bot and user data  
+- **Recharts** — Charts and graphs for analytics  
 
+
+## 🔹 Preview
+
+![Preview 1](https://github.com/alexxnder1/akh-panel/blob/main/github-resources/gif1.gif)  
+![Preview 2](https://github.com/alexxnder1/akh-panel/blob/main/github-resources/gif2.gif)  
+![Preview 3](https://github.com/alexxnder1/akh-panel/blob/main/github-resources/gif3.gif)  
+
+**Note:** This project is under active development. Features, UI, and functionality may change.
