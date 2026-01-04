@@ -5,3 +5,4 @@ server/node_modules
 build
 client/key.pem
 client/cert.pem
+github-resources
